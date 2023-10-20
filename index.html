@@ -286,10 +286,10 @@ draw();
 
 function draw(){//called in the circle() and square() functions above.
   document.getElementById("displaycircle").innerHTML = 'circle = [ x coordinate = ' + shape[0] + ',  y coodinate = ' + shape[1] + ', radius =' + shape[2] + ']' ;
-  document.getElementById("displaysquare").innerHTML = 'square = [ x coordinate =' + shape[3] + '[ square y coordinate = ' + shape[4] + ', square width = ' + shape[5] + ', square height = ' + ']' ;
-  document.getElementById("displayrectangle").innerHTML = 'rectangle = [ x coordinate = ' + shape[7] + ', rectangle y coorinate = '  + shape[8] + ', rectangle width = '  + shape[9] + ', rectangle height = '  + shape[10] + ']' ;
-  document.getElementById("displayellipse").innerHTML = 'ellipse = [ x coordinate = ' + shape[11] + ', ellipse y coordinate = ' + shape[12] + ', ellipse width = ' + shape[13] + ', ellipse height = ' + shape[14] + ']' ;
-  document.getElementById("displayline").innerHTML = 'line = [ x coordinate = ' + shape[15] + ', line y coordinate = ' + shape[16] + ', line width = ' + shape[17] + ', line height = ' + shape[18] + ']' ;
+  document.getElementById("displaysquare").innerHTML = 'square = [ x coordinate =' + shape[3] + '[ y coordinate = ' + shape[4] + ', width = ' + shape[5] + ', height = ' + shape[6] + ']' ;
+  document.getElementById("displayrectangle").innerHTML = 'rectangle = [ x coordinate = ' + shape[7] + ',y coorinate = '  + shape[8] + ', width = ' + shape[9] + ', height = ' + shape[10] + ']' ;
+  document.getElementById("displayellipse").innerHTML = 'ellipse = [ x coordinate = ' + shape[11] + ', y coordinate = ' + shape[12] + ', width = ' + shape[13] + ' height = ' + shape[14] + ']' ;
+  document.getElementById("displayline").innerHTML = 'line = [ x coordinate = ' + shape[15] + ', y coordinate = ' + shape[16] + ', width = ' + shape[17] + ', height = ' + shape[18] + ']' ;
 
   //Clear all
   ctx.beginPath();
