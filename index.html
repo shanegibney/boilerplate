@@ -117,15 +117,37 @@ const ctx = canvas.getContext("2d");
 const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d"); 
 
+/*
 function animation(){
+
+}
+*/
+let n = 100;
+let o = 100;
+let dx = 8;
+let dy = 8;
+let radius = 50;
+function animation(){
+  requestAnimationFrame(animation);
+  ctx2.clearRect(0,0,innerWidth,innerHeight);
+
   ctx2.beginPath();
 ctx2.fillStyle = "green";
-for(let m=0; m<360; m++){
-ctx2.arc(Math.sin(m)*(canvas2.width)/181000, canvas2.height/2, 10, 0, 2 * Math.PI);
+ctx2.arc(n , o, radius, 0, 2 * Math.PI);
 ctx2.fill();
-console.log(m);
+  //animate();
+  if (n + radius > canvas2.width || n - radius < 0){
+    dx = -dx;
+  }
+
+  if (o + radius > canvas2.height || o - radius < 0){
+    dy = -dy;
+  }
+
+  n += dx;
+  o += dy;
 }
-}
+
 function submit(){
      min = document.querySelector("#minim").value; 
      max = document.querySelector("#maxim").value;
