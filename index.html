@@ -7,7 +7,9 @@
     <link rel="styleshet" href="style.css">
 </head>
 <body>
-    <canvas id='canvas1' width="500" height="250" style='border:2px solid #110000;'></canvas><br>
+  <canvas id='canvas3' width="500" height="250" style='border:2px solid #00FF00;'></canvas>ctx3<br>
+  <input id="linearMotion" type="button" value="Animate" onclick="motion();"/><br>
+    <canvas id='canvas1' width="500" height="250" style='border:2px solid #110000;'></canvas>ctx<br>
     <input id="canvasCircle" type="button" value="circle" onclick="circle();"/>
     <p id="displaycircle"></p>
     <input id="canvasSquare" type="button" value="square" onclick="square();"/>
@@ -19,7 +21,7 @@
     <input id="canvasLine" type="button" value="line" onclick="line();"/>
     <p id="displayline"></p>
     <hr>
-    <canvas id="canvas2" width="800" height="300" style='border:2px dashed #FF0000;'></canvas>
+    <canvas id="canvas2" width="800" height="300" style='border:2px dashed #FF0000;'></canvas>ctx2
     <input id="ani" type="button" value="Animate bouncing ball" onclick="animation();"/>
     <br>
     <hr>
@@ -121,6 +123,8 @@ const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d"); 
 const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d"); 
+const canvas3 = document.getElementById("canvas3");
+const ctx3 = canvas3.getContext("2d"); 
 
 /*
 function animation(){
@@ -132,6 +136,8 @@ let o = 100;
 let dx = 8; //velocity of ball in x-direction
 let dy = 8; //velocity of ball in y-direction
 let radius = 20;
+
+//ctx2 bouncing ball animation
 function animation(){
   requestAnimationFrame(animation);
   ctx2.clearRect(0,0,innerWidth,innerHeight);
@@ -285,14 +291,14 @@ draw();
 }
 
 function draw(){//called in the circle() and square() functions above.
-  document.getElementById("displaycircle").innerHTML = 'circle = [ x coordinate = ' + shape[0] + ',  y coodinate = ' + shape[1] + ', radius =' + shape[2] + ']' ;
-  document.getElementById("displaysquare").innerHTML = 'square = [ x coordinate =' + shape[3] + ' y coordinate = ' + shape[4] + ', width = ' + shape[5] + ', height = ' + shape[6] + ']' ;
-  document.getElementById("displayrectangle").innerHTML = 'rectangle = [ x coordinate = ' + shape[7] + ', y coorinate = '  + shape[8] + ', width = ' + shape[9] + ', height = ' + shape[10] + ']' ;
-  document.getElementById("displayellipse").innerHTML = 'ellipse = [ x coordinate = ' + shape[11] + ', y coordinate = ' + shape[12] + ', width = ' + shape[13] + ' height = ' + shape[14] + ']' ;
-  document.getElementById("displayline").innerHTML = 'line = [ x coordinate = ' + shape[15] + ', y coordinate = ' + shape[16] + ', width = ' + shape[17] + ', height = ' + shape[18] + ']' ;
+  document.getElementById("displaycircle").innerHTML = 'circle = [ x-coordinate = ' + shape[0] + ',  y-coodinate = ' + shape[1] + ', radius =' + shape[2] + ']' ;
+  document.getElementById("displaysquare").innerHTML = 'square = [ x-coordinate =' + shape[3] + ', y-coordinate = ' + shape[4] + ', width = ' + shape[5] + ', height = ' + shape[6] + ']' ;
+  document.getElementById("displayrectangle").innerHTML = 'rectangle = [ x-coordinate = ' + shape[7] + ', y-coorinate = '  + shape[8] + ', width = ' + shape[9] + ', height = ' + shape[10] + ']' ;
+  document.getElementById("displayellipse").innerHTML = 'ellipse = [ x-coordinate = ' + shape[11] + ', y-coordinate = ' + shape[12] + ', width = ' + shape[13] + ', height = ' + shape[14] + ']' ;
+  document.getElementById("displayline").innerHTML = 'line = [ x-coordinate = ' + shape[15] + ', y-coordinate = ' + shape[16] + ', width = ' + shape[17] + ', height = ' + shape[18] + ']' ;
 
   //Clear all
-  ctx.beginPath();
+ctx.beginPath();
 ctx.fillStyle = "white";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 ctx.fill();
@@ -334,6 +340,64 @@ ctx.strokeStyle = 'orange';
 ctx.stroke();
 ctx.closePath();
 }
+
+/*
+let p = 0;
+function motion(){
+  requestAnimationFrame(motion);
+  ctx3.beginPath();
+  ctx3.fillStyle = "white";
+  ctx3.fillRect(0,0,canvas3.width,canvas3.height);
+  ctx3.fillStyle = "blue";
+  ctx3.arc(100, 0 + p, 20, 0, 2 * Math.PI);
+  ctx3.fill();
+ctx3.closePath();
+p++;
+}
+motion();
+*/
+/*
+let x = 100;
+let chang = 4;
+let radiu = 20;
+function motion(){
+  requestAnimationFrame(motion);
+  ctx3.beginPath();
+  ctx3.fillStyle = "white";
+  ctx3.fillRect(0,0,canvas3.width,canvas3.height);
+  ctx3.fillStyle = "blue";
+  ctx3.arc(x, 100, radiu, 0, 2 * Math.PI);
+  ctx3.fill();
+  ctx3.closePath();
+  if(x + radiu > 200 || x - radiu < 50 ){
+    chang=-chang;
+  }
+  x += chang;
+}
+*/
+let x = 100;
+let chang = 1;
+let radiu = 20;
+function motion(){
+  requestAnimationFrame(motion);
+  ctx3.beginPath();
+  ctx3.fillStyle = "white";
+  ctx3.fillRect(0,0,canvas3.width,canvas3.height);
+  ctx3.fillStyle = "blue";
+  ctx3.arc(x, 100, radiu, 0, 2 * Math.PI);
+  if(x + radiu > 150 || x - radiu < 50 ){
+    chang=-chang;
+  }
+  ctx3.fill();
+  ctx3.closePath();
+  ctx3.beginPath();
+  ctx3.arc(75, 100, 50, 0, 2 * Math.PI);
+  ctx3.strokeStyle = "orange";
+  ctx3.stroke
+  ctx3.closePath();
+  x += chang;
+}
+//motion();
 
 </script>
 </body>
