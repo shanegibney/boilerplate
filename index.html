@@ -193,14 +193,10 @@ function reset() {
 }
 
 function funct(){
-colour[0] = 'red';
-colour[1] = 'green';
-colour[2] = 'blue';
-colour[3] = 'purple';
-
+colour = ['red','orange','yellow','green','blue','indigo','violet','brown','black'];
 document.getElementById("test2").innerHTML = '<font color = \'' + colour[k] + '\'>' + colour[k];
 k++;
-if (k>2) {
+if (k>colour.length-1) {
  k = 0;
 }
 else {
@@ -221,7 +217,6 @@ function loop(){
         l=1;//start again
     }
     }
-//while loop
 
 function circle() {
   //generate coordinates
@@ -303,7 +298,6 @@ ctx.fillStyle = "white";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 ctx.fill();
 ctx.closePath();
-
 //Draw red circle
 ctx.beginPath();
 ctx.fillStyle = "red";
@@ -375,8 +369,10 @@ function motion(){
   x += chang;
 }
 */
+/*
+let q = 51;
 let x = 100;
-let chang = 1;
+let chang = 4;
 let radiu = 20;
 function motion(){
   requestAnimationFrame(motion);
@@ -384,21 +380,42 @@ function motion(){
   ctx3.fillStyle = "white";
   ctx3.fillRect(0,0,canvas3.width,canvas3.height);
   ctx3.fillStyle = "blue";
-  ctx3.arc(x, 100, radiu, 0, 2 * Math.PI);
-  if(x + radiu > 150 || x - radiu < 50 ){
-    chang=-chang;
-  }
+  ctx3.arc(x * Math.sin(q), 100, radiu, 0, 2 * Math.PI);
   ctx3.fill();
   ctx3.closePath();
-  ctx3.beginPath();
-  ctx3.arc(75, 100, 50, 0, 2 * Math.PI);
-  ctx3.strokeStyle = "orange";
-  ctx3.stroke
-  ctx3.closePath();
+  if(x + radiu > 200 || x - radiu < 50 ){
+    chang=-chang;
+  }
   x += chang;
+  q=+1.0;
+  //q+=0.1;
 }
-//motion();
+*/
+/*
+const rad = 20;
+let x = 0;
 
+const motion = (t) => {
+
+  const ease = easeSin(t * 0.001); // retrieve the sine (0.0, 1.0)
+  const x = rad + ease * (300 - rad * 2);
+  const y = 100;
+  
+  ctx3.clearRect(0, 0, ctx.canvas3.width, ctx.canvas3.height);
+  ctx3.beginPath();
+  ctx3.fillStyle = "blue";
+  ctx3.arc(x, y, rad, 0, Math.PI * 2);
+  ctx3.fill();
+  ctx3.closePath();
+
+  requestAnimationFrame(motion);
+};
+
+motion();
+*/
+function motion(){
+  console.log(performance.now());
+}
 </script>
 </body>
 </html>
