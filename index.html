@@ -193,8 +193,8 @@ function reset() {
 }
 
 function funct(){
-colour = ['red','orange','yellow','green','blue','indigo','violet','brown','black','grey','white'];
-document.getElementById("test2").innerHTML =  '<font color = \'' + colour[k] + '\'>' + colour[k];
+colour = ['red','orange','yellow','green','blue','indigo','violet','brown','black','grey','lightblue','beige','aqua','#D2691E','white'];
+document.getElementById("test2").innerHTML = colour.indexOf(colour[k])+1 + '. ' + '<font color = \'' + colour[k] + '\'>' + colour[k];
 k++;
 if (k==colour.length) {
  k = 0;//start again
