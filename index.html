@@ -193,11 +193,11 @@ function reset() {
 }
 
 function funct(){
-colour = ['red','orange','yellow','green','blue','indigo','violet','brown','black'];
-document.getElementById("test2").innerHTML = '<font color = \'' + colour[k] + '\'>' + colour[k];
+colour = ['red','orange','yellow','green','blue','indigo','violet','brown','black','grey','white'];
+document.getElementById("test2").innerHTML =  '<font color = \'' + colour[k] + '\'>' + colour[k];
 k++;
-if (k>colour.length-1) {
- k = 0;
+if (k==colour.length) {
+ k = 0;//start again
 }
 else {
 //await click
