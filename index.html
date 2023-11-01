@@ -40,7 +40,7 @@
     max (50-100):<input type="range" id="maxim" value="75" name="maximum" min="50" max="100" step="1" oninput="this.nextElementSibling.value = this.value">
     <output>75</output><br>
   <input id="submitid" type="button" value="Submit" onclick="submit();"/>
-  <span id="show">Generated a random number between <span id="min">this</span> and <span id="max">that</span>.</span>
+  <span id="show">Generates a random number between <span id="min">this</span> and <span id="max">that</span>.</span>
   <p id="range">value</p>
 <hr>
   <!--To comment HTML--> 
@@ -55,6 +55,11 @@
   <h3>Call a function</h3>
   <input id="fun" type="button" value="Change colour" onclick="funct();"/>
   <p id="test2">substitute colour here</p>
+  <p id="k"></p>
+  <p id="index"></p>
+  <p id="colour"></p>
+  <p id="name"></p>
+  <p id="add"></p><br>
   <hr>
   </h3>loop</h3>
   <input id="loop5" type="button" value="1 To 5" onclick="loop();"/>
@@ -191,22 +196,32 @@ function reset() {
     i = 0;
     document.getElementById("test1").innerHTML = i;
 }
+colour = ['red','green','blue'];//Just add a colour to this line the rest of the code will work fine using colour.length
+//'red','orange','yellow','green','blue','indigo','violet','brown','black','grey','lightblue','beige','aqua','#D2691E','white'
 
 function funct(){
+  /*document.getElementById("k").innerHTML = 'k = ' + k;
+  document.getElementById("index").innerHTML = '';
+  document.getElementById("colour").innerHTML = 'colour[k] = colour[' + k + '] = ' + colour[k];
+  document.getElementById("name").innerHTML = 'name = ' + colour[k];*/
 colour = ['red','orange','yellow','green','blue','indigo','violet','brown','black','grey','lightblue','beige','aqua','#D2691E','white'];
 document.getElementById("test2").innerHTML = colour.indexOf(colour[k])+1 + '. ' + '<font color = \'' + colour[k] + '\'>' + colour[k];
+  //<div id="box" style="background-color: salmon">Box 1</div>
+document.getElementById("add").innerHTML += '<div style="background-color: ' + colour[k] +'; width = 100px;">' + colour.indexOf(colour[k+1]) + '. <font color = black>' + colour[k];
 k++;
 if (k==colour.length) {
+  document.getElementById("add").innerHTML = colour.indexOf(colour[colour.length]) + '. ' + colour[colour.length-1];
  k = 0;//start again
 }
 else {
 //await click
 }
 }
+
 function loop(){ 
     /* a for loop
     for (let l = 0; l < 5; l++) {
-        //code
+        //codes
     }
     */
     document.getElementById("test3").innerHTML = l;
