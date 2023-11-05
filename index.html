@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <title>Javascript General</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="styleshet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id='canvas3' width="500" height="250" style='border:2px solid #00FF00;'></canvas>ctx3<br>
-  <input id="linearMotion" type="button" value="Animate" onclick="motion();"/><br>
-    <canvas id='canvas1' width="500" height="250" style='border:2px solid #110000;'></canvas>ctx<br>
+  <canvas id='canvas3' width="500" height="250" style='border:2px solid#00FFFF;'></canvas>ctx3<br>
+  <input id="linearMotion" type="button" value="elliptic orbit" onclick="thirdCanvas();"/>
+  <hr>
+    <canvas id='canvas1' width="500" height="250" style='border:2px solid #FF0000;'></canvas>ctx<br>
     <input id="canvasCircle" type="button" value="circle" onclick="circle();"/>
     <p id="displaycircle"></p>
     <input id="canvasSquare" type="button" value="square" onclick="square();"/>
@@ -20,10 +21,17 @@
     <p id="displayellipse"></p>
     <input id="canvasLine" type="button" value="line" onclick="line();"/>
     <p id="displayline"></p>
+    To do:<br>
+    1. Add button to pause animation.<br>
+    2. Add button to change background colour.<br>
     <hr>
-    <canvas id="canvas2" width="800" height="300" style='border:2px dashed #FF0000;'></canvas>ctx2
-    <input id="ani" type="button" value="Animate bouncing ball" onclick="animation();"/>
+    <canvas id="canvas2" width="800" height="300" style='border:2px dashed #0000FF;'></canvas>ctx2
+    <input id="ani" type="button" value="Animate bouncing ball"
+    onclick="animation();"/>
     <br>
+    To do:<br>
+    1. Add button to pause animation.<br>
+    2. Add button to change background colour.<br>
     <hr>
     <h3>Submit form background colour for canvas</h3>
     <!--<input id="canvasColour" type="color" value="canvas background colour" onclick="colour();"/>-->
@@ -136,11 +144,70 @@ const ctx2 = canvas2.getContext("2d");
 const canvas3 = document.getElementById("canvas3");
 const ctx3 = canvas3.getContext("2d"); 
 
-/*
-function animation(){
+let minRad = 10;
+let rangeRad = 20;
+let p = 0;
 
+let x = 200;
+let y = 200;
+
+pulse();
+
+function pulse(){
+  p=p+0.02;
+if(p>1){
+  p=0
 }
-*/
+const rad=minRad+rangeRad*p;
+ctx3.clearRect(0,0,canvas3.width,canvas3.height)
+ctx3.beginPath();
+ctx3.arc(x,y,rad,0,Math.PI*2);
+ctx3.stroke();
+
+  requestAnimationFrame(pulse);
+}
+
+
+canvas3.addEventListener("mousemove",function(info){
+x=info.offsetX;
+y=info.offsetY;
+
+});
+
+function thirdCanvas(){
+  let d = 0;
+  let F = 0;
+  let a = 0;
+  let v2 =0;
+  let m1 = 0;
+  let m2 = 0;
+  let g = 0;
+  let x1 = 100;
+  let y1 = 100;
+  let x2 =100;
+  let y2 = 50;
+  let r1 = 10;
+  let r2 = 10;
+
+
+  d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
+  //F=g*m1*m2/pow(d,2);//Universal law of gravitation
+  //m1 and m2 must be dependent on r1 and r2 respectively
+  //a=F/m(rsun);//Newton's 2nd Law where m depends on mass of object you're travelling around
+  //From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
+  //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
+
+  //console.log(d);
+  requestAnimationFrame(thirdCanvas);
+  ctx3.beginPath();
+ctx3.fillStyle = "orange";
+ctx3.arc(x2 , y2, r2, 0, 2 * Math.PI);
+ctx3.fill();
+ctx3.beginPath();
+ctx3.fillStyle = "yellow";
+ctx3.arc(x1 , y1, r1, 0, 2 * Math.PI);
+ctx3.fill();
+}
 let n = 100;
 let o = 100;
 let dx = 8; //velocity of ball in x-direction
