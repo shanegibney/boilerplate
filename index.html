@@ -22,15 +22,16 @@
     <input id="canvasLine" type="button" value="line" onclick="line();"/>
     <p id="displayline"></p>
     To do:<br>
-    1. Add button to pause animation.<br>
+    1. Add button to pause animationn.<br>
     2. Add button to change background colour.<br>
     <hr>
     <canvas id="canvas2" width="800" height="300" style='border:2px dashed #0000FF;'></canvas>ctx2
     <input id="ani" type="button" value="Animate bouncing ball"
-    onclick="animation();"/>
+    onclick="toggleanimation();"/>
+
     <br>
     To do:<br>
-    1. Add button to pause animation.<br>
+    1. Add button to pause animationn.<br>
     2. Add button to change background colour.<br>
     <hr>
     <h3>Submit form background colour for canvas</h3>
@@ -213,10 +214,12 @@ let o = 100;
 let dx = 8; //velocity of ball in x-direction
 let dy = 8; //velocity of ball in y-direction
 let radius = 20;
+let lPause = true;
 
 //ctx2 bouncing ball animation
 function animation(){
-  requestAnimationFrame(animation);
+  if (!lPause)
+     requestAnimationFrame(animation);
   ctx2.clearRect(0,0,innerWidth,innerHeight);
 
   ctx2.beginPath();
@@ -234,7 +237,22 @@ ctx2.fill();
 
   n += dx;
   o += dy;
+  
 }
+
+function toggleanimation() {
+  if (lPause)
+    {  lPause = false;
+	   requestAnimationFrame(animation);
+	   document.getElementById("ani").value = "Pause bouncing ball";
+    }
+  else
+    {  lPause = true;
+	   document.getElementById("ani").value = "Animate bouncing ball";
+    }
+
+}
+
 
 function submit(){
      min = document.querySelector("#minim").value; 
