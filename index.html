@@ -8,7 +8,8 @@
 </head>
 <body>
   <canvas id='canvas3' width="500" height="250" style='border:2px solid#00FFFF;'></canvas>ctx3<br>
-  <input id="linearMotion" type="button" value="elliptic orbit" onclick="thirdCanvas();"/>
+  <input id="pulsing" type="button" value="Start animate" onclick="togglePause();"/>
+  <input id="sin" type="button" value="show" onclick="show();"/> 
   <hr>
     <canvas id='canvas1' width="500" height="250" style='border:2px solid #FF0000;'></canvas>ctx<br>
     <input id="canvasCircle" type="button" value="circle" onclick="circle();"/>
@@ -21,9 +22,6 @@
     <p id="displayellipse"></p>
     <input id="canvasLine" type="button" value="line" onclick="line();"/>
     <p id="displayline"></p>
-    To do:<br>
-    1. Add button to pause animationn.<br>
-    2. Add button to change background colour.<br>
     <hr>
     <canvas id="canvas2" width="800" height="300" style='border:2px dashed #0000FF;'></canvas>ctx2
     <input id="ani" type="button" value="Animate bouncing ball"
@@ -31,7 +29,6 @@
 
     <br>
     To do:<br>
-    1. Add button to pause animationn.<br>
     2. Add button to change background colour.<br>
     <hr>
     <h3>Submit form background colour for canvas</h3>
@@ -119,6 +116,8 @@
   <!--<form>
   <button type="button" id="anonymousfunction">Submit</button>
   </form>-->
+
+
  <script>
 // To comment Javascript
 
@@ -151,10 +150,12 @@ let p = 0;
 
 let x = 200;
 let y = 200;
-
-pulse();
+let pulsePause = false;
+//pulse();
 
 function pulse(){
+  if(!pulsePause)
+  requestAnimationFrame(pulse);
   p=p+0.02;
 if(p>1){
   p=0
@@ -165,7 +166,7 @@ ctx3.beginPath();
 ctx3.arc(x,y,rad,0,Math.PI*2);
 ctx3.stroke();
 
-  requestAnimationFrame(pulse);
+  //requestAnimationFrame(pulse);
 }
 
 
@@ -175,7 +176,19 @@ y=info.offsetY;
 
 });
 
-function thirdCanvas(){
+function togglePause() {
+  if (pulsePause)
+    {  pulsePause = false;
+	   requestAnimationFrame(pulse);
+	   document.getElementById("pulsing").value = "Pause pulsing";
+    }
+  else
+    {  pulsePause = true;
+	   document.getElementById("pulsing").value = "Animate pulsing";
+    }
+}
+
+function show(){
   let d = 0;
   let F = 0;
   let a = 0;
@@ -183,13 +196,13 @@ function thirdCanvas(){
   let m1 = 0;
   let m2 = 0;
   let g = 0;
-  let x1 = 100;
+  let x1 = 10;
   let y1 = 100;
-  let x2 =100;
+  let x2 = 100;
   let y2 = 50;
   let r1 = 10;
   let r2 = 10;
-
+  let theta = Math.PI/180;
 
   d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
   //F=g*m1*m2/pow(d,2);//Universal law of gravitation
@@ -198,34 +211,42 @@ function thirdCanvas(){
   //From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
   //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
 
-  //console.log(d);
-  requestAnimationFrame(thirdCanvas);
+ 
+  requestAnimationFrame(show);
   ctx3.beginPath();
 ctx3.fillStyle = "orange";
-ctx3.arc(x2 , y2, r2, 0, 2 * Math.PI);
+x2 = 60 * Math.sin(theta);
+console.log('theta = ' + theta);
+console.log('sin(' + theta + ') = ' + Math.sin(theta));
+theta = theta + theta;
+ctx3.arc(x1, y1, r1, 0, 2 * Math.PI);
 ctx3.fill();
 ctx3.beginPath();
-ctx3.fillStyle = "yellow";
-ctx3.arc(x1 , y1, r1, 0, 2 * Math.PI);
+ctx3.fillStyle = "red";
+ctx3.arc(x2, y2, r2, 0, 2 * Math.PI);
 ctx3.fill();
 }
 let n = 100;
 let o = 100;
-let dx = 8; //velocity of ball in x-direction
-let dy = 8; //velocity of ball in y-direction
+let dx = 4; //velocity of ball in x-direction
+let dy = 4; //velocity of ball in y-direction
 let radius = 20;
-let lPause = true;
+let lPause = false;
 
 //ctx2 bouncing ball animation
 function animation(){
   if (!lPause)
      requestAnimationFrame(animation);
   ctx2.clearRect(0,0,innerWidth,innerHeight);
-
   ctx2.beginPath();
 ctx2.fillStyle = "green";
 ctx2.arc(n , o, radius, 0, 2 * Math.PI);
 ctx2.fill();
+ctx2.beginPath();
+ctx2.strokeStyle = "black";
+ctx2.lineWidth = 2;
+ctx2.arc(n , o, radius, 0, 2 * Math.PI);
+ctx2.stroke();
   //animate();
   if (n + radius > canvas2.width || n - radius < 0){
     dx = -dx;
@@ -237,7 +258,6 @@ ctx2.fill();
 
   n += dx;
   o += dy;
-  
 }
 
 function toggleanimation() {
@@ -250,7 +270,6 @@ function toggleanimation() {
     {  lPause = true;
 	   document.getElementById("ani").value = "Animate bouncing ball";
     }
-
 }
 
 
