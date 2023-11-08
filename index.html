@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <canvas id='canvas4' width="500" height="250" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
+  <input id="sin" type="button" value="circular to linear motion" onclick="show();"/> <!--Working on line 218 linear to circular motion-->
+  <hr>
   <canvas id='canvas3' width="500" height="250" style='border:2px solid#00FFFF;'></canvas>ctx3<br>
-  <input id="pulsing" type="button" value="Start animate" onclick="togglePause();"/>
-  <input id="sin" type="button" value="show" onclick="show();"/> 
+  <input id="pulsing" type="button" value="Animate pulsing" onclick="togglePause();"/>
   <hr>
     <canvas id='canvas1' width="500" height="250" style='border:2px solid #FF0000;'></canvas>ctx<br>
     <input id="canvasCircle" type="button" value="circle" onclick="circle();"/>
@@ -143,7 +145,8 @@ const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d"); 
 const canvas3 = document.getElementById("canvas3");
 const ctx3 = canvas3.getContext("2d"); 
-
+const canvas4 = document.getElementById("canvas4");
+const ctx4 = canvas4.getContext("2d"); 
 let minRad = 10;
 let rangeRad = 20;
 let p = 0;
@@ -187,7 +190,7 @@ function togglePause() {
 	   document.getElementById("pulsing").value = "Animate pulsing";
     }
 }
-
+let theta = 0;
 function show(){
   let d = 0;
   let F = 0;
@@ -202,30 +205,55 @@ function show(){
   let y2 = 50;
   let r1 = 10;
   let r2 = 10;
-  let theta = Math.PI/180;
 
-  d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
+  //d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
   //F=g*m1*m2/pow(d,2);//Universal law of gravitation
   //m1 and m2 must be dependent on r1 and r2 respectively
   //a=F/m(rsun);//Newton's 2nd Law where m depends on mass of object you're travelling around
   //From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
   //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
-
- 
   requestAnimationFrame(show);
-  ctx3.beginPath();
-ctx3.fillStyle = "orange";
-x2 = 60 * Math.sin(theta);
-console.log('theta = ' + theta);
+ctx4.beginPath();
+ctx4.clearRect(0,0,innerWidth,innerHeight);
+ctx4.lineWidth = 4;
+ctx4.fillStyle = "purple";
+//ctx3.arc(125, 62.5, 50, 0, 2 * Math.PI);
+ctx4.ellipse(50, 50, 50, 25, Math.PI/2, 0, 2 * Math.PI);
+ctx4.fill();
+ctx4.beginPath();
+ctx4.fillStyle = "orange";
+y2 = 25 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 25 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
+x2 = 25 * Math.sin(theta) + 62.5;//Theta must be in radians. 25 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
+/*console.log('theta = ' + theta);
 console.log('sin(' + theta + ') = ' + Math.sin(theta));
-theta = theta + theta;
-ctx3.arc(x1, y1, r1, 0, 2 * Math.PI);
-ctx3.fill();
-ctx3.beginPath();
-ctx3.fillStyle = "red";
-ctx3.arc(x2, y2, r2, 0, 2 * Math.PI);
-ctx3.fill();
+console.log('x2 = ' + x2);
+console.log('y2 = ' + y2);*/
+ctx4.arc(x1, y1, r1, 0, 2 * Math.PI);
+ctx4.fill();
+
+ctx4.beginPath();
+ctx4.clearRect(0,0,innerWidth,innerHeight);
+ctx4.lineWidth = 2;
+ctx4.fillStyle = "blue";
+ctx4.moveTo(x2,y2);//centre of circle
+ctx4.lineTo(62.5,y2 + 70);//elbow
+ctx4.lineTo(62.5,y2 + 120);//top of piston box
+ctx4.moveTo(62.5-10,120);//top left corner
+ctx4.lineTo(62.5-10,240);// bottom left corner
+ctx4.lineTo(62.5+10,240);// bottom right corner
+ctx4.lineTo(62.5+10,120);// top right corner
+ctx4.lineTo(62.5-10,120);// top left corner to finish
+ctx4.moveTo(62.5+10,y2 + 120);//Top of piston right
+ctx4.lineTo(62.5-10,y2 + 120);//Top of piston left
+ctx4.stroke();
+
+ctx4.beginPath();
+ctx4.fillStyle = "red";
+ctx4.arc(x2, y2, r2, 0, 2 * Math.PI);
+ctx4.fill();
+theta += 0.1;//speed
 }
+
 let n = 100;
 let o = 100;
 let dx = 4; //velocity of ball in x-direction
@@ -258,6 +286,7 @@ ctx2.stroke();
 
   n += dx;
   o += dy;
+  
 }
 
 function toggleanimation() {
