@@ -8,12 +8,12 @@
 </head>
 <body>
   <canvas id='canvas4' width="500" height="250" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
-  <input id="sin" type="button" value="circular to linear motion" onclick="show();"/> <!--Working on line 218 linear to circular motion-->
+  <input id="sin" type="button" value="circular to linear motion" onclick="toggleshow();"/> <!--Working on line 218 linear to circular motion-->
   <hr>
-  <canvas id='canvas3' width="500" height="250" style='border:2px solid#00FFFF;'></canvas>ctx3<br>
+  <canvas id='canvas3' width="500" height="250" style='border:2px double#00FFFF;'></canvas>ctx3<br>
   <input id="pulsing" type="button" value="Animate pulsing" onclick="togglePause();"/>
   <hr>
-    <canvas id='canvas1' width="500" height="250" style='border:2px solid #FF0000;'></canvas>ctx<br>
+    <canvas id='canvas1' width="500" height="250" style='border:2px dotted #FF0000;'></canvas>ctx<br>
     <input id="canvasCircle" type="button" value="circle" onclick="circle();"/>
     <p id="displaycircle"></p>
     <input id="canvasSquare" type="button" value="square" onclick="square();"/>
@@ -191,8 +191,7 @@ function togglePause() {
     }
 }
 let theta = 0;
-function show(){
-  let d = 0;
+let d = 0;
   let F = 0;
   let a = 0;
   let v2 =0;
@@ -206,35 +205,65 @@ function show(){
   let r1 = 10;
   let r2 = 10;
 
+  let pauseShow = false;
+  
+  let wave = [0,0,100,200,200,100];
+
+  function show(){
+ctx4.moveTo[0,0];
+for (let jj = 1; jj < wave.length; jj += 2) {
+//console.log('jj = ' + jj)
+ctx4.beginPath();
+//ctx4.clearRect(0,0,innerWidth,innerHeight);
+ctx4.lineWidth = 6;
+ctx4.lineTo(jj,jj+1);
+}
+ctx4.stroke();
+
+  if (!pauseShow)
+     requestAnimationFrame(show);
   //d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
   //F=g*m1*m2/pow(d,2);//Universal law of gravitation
   //m1 and m2 must be dependent on r1 and r2 respectively
   //a=F/m(rsun);//Newton's 2nd Law where m depends on mass of object you're travelling around
   //From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
   //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
-  requestAnimationFrame(show);
+  
+  //console.log('shhhhhhhaneeeeee');
+
 ctx4.beginPath();
-ctx4.clearRect(0,0,innerWidth,innerHeight);
-ctx4.lineWidth = 4;
-ctx4.fillStyle = "purple";
-//ctx3.arc(125, 62.5, 50, 0, 2 * Math.PI);
-ctx4.ellipse(50, 50, 50, 25, Math.PI/2, 0, 2 * Math.PI);
+//ctx4.clearRect(0,0,innerWidth,innerHeight);
+//ctx4.lineWidth = 4;
+//ctx4.fillStyle = "purple";
+ctx4.arc(125, 25, 50, 0, 2 * Math.PI);
+//ctx4.ellipse(50, 50, 50, 25, Math.PI/2, 0, 2 * Math.PI);
 ctx4.fill();
-ctx4.beginPath();
-ctx4.fillStyle = "orange";
-y2 = 25 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 25 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
+
 x2 = 25 * Math.sin(theta) + 62.5;//Theta must be in radians. 25 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
-/*console.log('theta = ' + theta);
-console.log('sin(' + theta + ') = ' + Math.sin(theta));
+y2 = 25 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 25 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
+
+//ctx4.beginPath();
+//ctx4.fillStyle = "orange";
+
+/*console.log('sin(' + theta + ') = ' + Math.sin(theta));
 console.log('x2 = ' + x2);
 console.log('y2 = ' + y2);*/
+//ctx4.arc(x1, y1, r1, 0, 2 * Math.PI);
+//ctx4.fill();
+
+ctx4.beginPath();
+ctx4.fillStyle = "orange";
 ctx4.arc(x1, y1, r1, 0, 2 * Math.PI);
+ctx4.fill();
+
+ctx4.beginPath();
+ctx4.fillStyle = 'Green';
+ctx4.arc(62.5, 62.5, 50, 0, 2 * Math.PI);
 ctx4.fill();
 
 ctx4.beginPath();
 ctx4.clearRect(0,0,innerWidth,innerHeight);
 ctx4.lineWidth = 2;
-ctx4.fillStyle = "blue";
 ctx4.moveTo(x2,y2);//centre of circle
 ctx4.lineTo(62.5,y2 + 70);//elbow
 ctx4.lineTo(62.5,y2 + 120);//top of piston box
@@ -245,13 +274,52 @@ ctx4.lineTo(62.5+10,120);// top right corner
 ctx4.lineTo(62.5-10,120);// top left corner to finish
 ctx4.moveTo(62.5+10,y2 + 120);//Top of piston right
 ctx4.lineTo(62.5-10,y2 + 120);//Top of piston left
+ctx4.moveTo(x2,y2);//Move to centre of red revolving circle
+ctx4.lineTo(100,y2);//arm
+
 ctx4.stroke();
 
-ctx4.beginPath();
-ctx4.fillStyle = "red";
-ctx4.arc(x2, y2, r2, 0, 2 * Math.PI);
-ctx4.fill();
+    ctx4.beginPath();
+    ctx4.fillStyle = 'pink';
+    ctx4.arc(x2, y2, r2, 0, 2 * Math.PI);
+    ctx4.fill();
+
+let step = 4;
+for (let ii = -4; ii < canvas4.height; ii += step) {
+    var width = ctx4.canvas.width;
+    var height = ctx4.canvas.height;
+    var scale = 20;
+
+    ctx4.beginPath();
+    ctx4.lineWidth = 2;
+    ctx4.strokeStyle = 'lightgrey';
+    
+    var xd = 100+ii;
+    console.log('xd + ii = ' + xd + ' + ' + ii + ' ii  = ' + (xd + ii));
+    var yd = 100;
+    var amplitude = 25;
+    var frequency = 20;
+    ctx4.moveTo(xd*ii/10, yd);
+    while (xd < width) {
+        yd = height/2 + amplitude * Math.sin(xd/frequency);
+        ctx4.lineTo(xd, yd);
+        xd += 1;
+    }
+    ctx4.stroke();
+}
 theta += 0.1;//speed
+}
+
+function toggleshow() {//4th canvas ctx4
+  if (pauseShow)
+    {  pauseShow = false;
+	   requestAnimationFrame(show);
+	   document.getElementById("sin").value = "Pause";
+    }
+  else
+    {  pauseShow = true;
+	   document.getElementById("sin").value = "Circular to linear motion";
+    }
 }
 
 let n = 100;
@@ -338,9 +406,19 @@ colour = ['red','green','blue'];//Just add a colour to this line the rest of the
 //'red','orange','yellow','green','blue','indigo','violet','brown','black','grey','lightblue','beige','aqua','#D2691E','white'
 
 function funct(){
+  
+  colour = ['red','orange','yellow','green','blue','indigo','violet','brown','black','grey','lightblue','beige','aqua','#D2691E','white'];
 
-  if(k==0){
-  document.getElementById("test2").innerHTML = 'dddd';
+if ((k < 0) || (k >= colour.length))
+{  k = 0;
+   document.getElementById("add").innerHTML = '';
+}
+
+document.getElementById("test2").innerHTML = (k+1) + '. ' + '<font color = \'' + colour[k] + '\'>' + colour[k];
+document.getElementById("add").innerHTML += '<font color = black> <div style="background-color: ' + colour[k] + ' ;width : 100px;"> ' + (k+1) + '. ' + colour[k] + '</div>';
+k++;
+  /*if(k==0){
+  document.getElementById("test2").innerHTML = 'dddd';*/
 }
   /*document.getElementById("k").innerHTML = 'k = ' + k;
   document.getElementById("index").innerHTML = '';
