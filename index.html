@@ -207,19 +207,19 @@ let d = 0;
 
   let pauseShow = false;
   
-  let wave = [0,0,100,200,200,100];
+  let wave = [100,200,200,100];
 
   function show(){
-ctx4.moveTo[0,0];
+/*ctx4.beginPath();
+ctx4.lineWidth = 2;
+ctx4.moveTo(0,0);
 for (let jj = 1; jj < wave.length; jj += 2) {
 //console.log('jj = ' + jj)
-ctx4.beginPath();
 //ctx4.clearRect(0,0,innerWidth,innerHeight);
-ctx4.lineWidth = 6;
 ctx4.lineTo(jj,jj+1);
 }
 ctx4.stroke();
-
+*/
   if (!pauseShow)
      requestAnimationFrame(show);
   //d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
@@ -231,13 +231,13 @@ ctx4.stroke();
   
   //console.log('shhhhhhhaneeeeee');
 
-ctx4.beginPath();
+//ctx4.beginPath();
 //ctx4.clearRect(0,0,innerWidth,innerHeight);
 //ctx4.lineWidth = 4;
 //ctx4.fillStyle = "purple";
-ctx4.arc(125, 25, 50, 0, 2 * Math.PI);
+//ctx4.arc(125, 25, 50, 0, 2 * Math.PI);
 //ctx4.ellipse(50, 50, 50, 25, Math.PI/2, 0, 2 * Math.PI);
-ctx4.fill();
+//ctx4.fill();
 
 x2 = 25 * Math.sin(theta) + 62.5;//Theta must be in radians. 25 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
 y2 = 25 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 25 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
@@ -251,15 +251,17 @@ console.log('y2 = ' + y2);*/
 //ctx4.arc(x1, y1, r1, 0, 2 * Math.PI);
 //ctx4.fill();
 
-ctx4.beginPath();
+/*ctx4.beginPath();
 ctx4.fillStyle = "orange";
 ctx4.arc(x1, y1, r1, 0, 2 * Math.PI);
 ctx4.fill();
+*/
 
-ctx4.beginPath();
+/*ctx4.beginPath();
 ctx4.fillStyle = 'Green';
 ctx4.arc(62.5, 62.5, 50, 0, 2 * Math.PI);
 ctx4.fill();
+*/
 
 ctx4.beginPath();
 ctx4.clearRect(0,0,innerWidth,innerHeight);
@@ -284,8 +286,8 @@ ctx4.stroke();
     ctx4.arc(x2, y2, r2, 0, 2 * Math.PI);
     ctx4.fill();
 
-let step = 4;
-for (let ii = -4; ii < canvas4.height; ii += step) {
+//let step = 4;
+//for (let ii = -4; ii < canvas4.height; ii += step) {}
     var width = ctx4.canvas.width;
     var height = ctx4.canvas.height;
     var scale = 20;
@@ -294,7 +296,7 @@ for (let ii = -4; ii < canvas4.height; ii += step) {
     ctx4.lineWidth = 2;
     ctx4.strokeStyle = 'lightgrey';
     
-    var xd = 100+ii;
+    /*var xd = 100+ii;
     console.log('xd + ii = ' + xd + ' + ' + ii + ' ii  = ' + (xd + ii));
     var yd = 100;
     var amplitude = 25;
@@ -305,10 +307,10 @@ for (let ii = -4; ii < canvas4.height; ii += step) {
         ctx4.lineTo(xd, yd);
         xd += 1;
     }
-    ctx4.stroke();
-}
+    ctx4.stroke();*/
+
 theta += 0.1;//speed
-}
+  }//closes the function show()
 
 function toggleshow() {//4th canvas ctx4
   if (pauseShow)
@@ -406,7 +408,7 @@ colour = ['red','green','blue'];//Just add a colour to this line the rest of the
 //'red','orange','yellow','green','blue','indigo','violet','brown','black','grey','lightblue','beige','aqua','#D2691E','white'
 
 function funct(){
-  
+ /* 
   colour = ['red','orange','yellow','green','blue','indigo','violet','brown','black','grey','lightblue','beige','aqua','#D2691E','white'];
 
 if ((k < 0) || (k >= colour.length))
@@ -416,9 +418,9 @@ if ((k < 0) || (k >= colour.length))
 
 document.getElementById("test2").innerHTML = (k+1) + '. ' + '<font color = \'' + colour[k] + '\'>' + colour[k];
 document.getElementById("add").innerHTML += '<font color = black> <div style="background-color: ' + colour[k] + ' ;width : 100px;"> ' + (k+1) + '. ' + colour[k] + '</div>';
-k++;
-  /*if(k==0){
-  document.getElementById("test2").innerHTML = 'dddd';*/
+k++;*/
+  if(k==0){
+  document.getElementById("test2").innerHTML = 'dddd';
 }
   /*document.getElementById("k").innerHTML = 'k = ' + k;
   document.getElementById("index").innerHTML = '';
@@ -435,6 +437,7 @@ document.getElementById("add").innerHTML += '<font color = black> <div style="ba
   */
 //solidIncr++;
 k++;
+
 if (k==colour.length-1) {
   document.getElementById("add").innerHTML += colour.length + '. ' + colour[colour.length-1];
 }
@@ -445,6 +448,7 @@ if (k==colour.length+1) {
 else {
 //await click
 }
+
 /*
 if (solidIncr==colour.length) {
   document.getElementById("add").innerHTML = '1. red';//write the first line
