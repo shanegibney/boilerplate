@@ -29,7 +29,7 @@
     <input id="ani" type="button" value="Animate bouncing ball"
     onclick="toggleanimation();"/>
     <br>Background:<input type="color" id="bgball" value="bgball" name="bgball">
-  <input id="bgballid" type="button" value="submit" onclick="bgball();"/>Not working yet!
+  <input id="bgballid" type="button" value="submit" onclick="animation();"/>Not working yet! Can get the colour from the form into JS function but can't use it.
   <hr>
     <h3><input type="button" value="Reload page" onclick="window.location.reload();"></h3>
     <hr>
@@ -312,7 +312,6 @@ function toggleshow() {//4th canvas ctx4
 	   document.getElementById("sin").value = "Circular to linear motion";
     }
 }
-let bgcolour;//declare variable outside function
 
 let n = 100;
 let o = 100;
@@ -323,8 +322,19 @@ let lPause = false;
 
 //ctx2 bouncing ball animation
 function animation(){
+
   if (!lPause)
      requestAnimationFrame(animation);
+let bgcolour = document.getElementById("bgball").value;
+console.log('in animation: bgcolour = ' + bgcolour);
+
+//Draw a background rectangle
+ctx.beginPath();
+ctx.fillStyle = bgcolour;
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fill();
+ctx.closePath();
+
   ctx2.clearRect(0,0,innerWidth,innerHeight);
   ctx2.beginPath();
 ctx2.fillStyle = "green";
@@ -372,16 +382,6 @@ function submit(){
     document.getElementById("max").innerHTML = max;
 }
 
-function bgball(){//background of ball
-    bgcolour = document.getElementById("bgball").value;//This variable is declared on line 315
-  console.log('inside' + bgcolour);//Inside function bgball()
-  //call animation() and pass in bgcolour parameter.
-}
-
-
-console.log('outside' + bgcolour);//Outside the function bgball() line 376
-//Trying to get this variable bgcolour into the animation() function which is on line 325. 
-
 function rand() {
  let ran = generateRandomInteger(1,11);
  document.getElementById("rand").innerHTML = ran;
@@ -403,9 +403,6 @@ function reset() {
     i = 0;
     document.getElementById("test1").innerHTML = i;
 }
-colour = ['red','green','blue'];//Just add a colour to this line the rest of the code will work fine using colour.length
-//'red','orange','yellow','green','blue','indigo','violet','brown','black','grey','lightblue','beige','aqua','#D2691E','white'
-
 function funct(){
   colour = ['red','orange','yellow','green','blue','indigo','violet','brown','black','grey','lightblue','beige','aqua','#D2691E','white'];
 
@@ -419,11 +416,6 @@ function funct(){
 }
 
 function loop(){ 
-    /* a for loop
-    for (let l = 0; l < 5; l++) {
-        //codes
-    }
-    */
     document.getElementById("test3").innerHTML = l;
     console.log(l);
     if (l<5){
@@ -550,87 +542,6 @@ ctx.stroke();
 ctx.closePath();
 }
 
-/*
-let p = 0;
-function motion(){
-  requestAnimationFrame(motion);
-  ctx3.beginPath();
-  ctx3.fillStyle = "white";
-  ctx3.fillRect(0,0,canvas3.width,canvas3.height);
-  ctx3.fillStyle = "blue";
-  ctx3.arc(100, 0 + p, 20, 0, 2 * Math.PI);
-  ctx3.fill();
-ctx3.closePath();
-p++;
-}
-motion();
-*/
-/*
-let x = 100;
-let chang = 4;
-let radiu = 20;
-function motion(){
-  requestAnimationFrame(motion);
-  ctx3.beginPath();
-  ctx3.fillStyle = "white";
-  ctx3.fillRect(0,0,canvas3.width,canvas3.height);
-  ctx3.fillStyle = "blue";
-  ctx3.arc(x, 100, radiu, 0, 2 * Math.PI);
-  ctx3.fill();
-  ctx3.closePath();
-  if(x + radiu > 200 || x - radiu < 50 ){
-    chang=-chang;
-  }
-  x += chang;
-}
-*/
-/*
-let q = 51;
-let x = 100;
-let chang = 4;
-let radiu = 20;
-function motion(){
-  requestAnimationFrame(motion);
-  ctx3.beginPath();
-  ctx3.fillStyle = "white";
-  ctx3.fillRect(0,0,canvas3.width,canvas3.height);
-  ctx3.fillStyle = "blue";
-  ctx3.arc(x * Math.sin(q), 100, radiu, 0, 2 * Math.PI);
-  ctx3.fill();
-  ctx3.closePath();
-  if(x + radiu > 200 || x - radiu < 50 ){
-    chang=-chang;
-  }
-  x += chang;
-  q=+1.0;
-  //q+=0.1;
-}
-*/
-/*
-const rad = 20;
-let x = 0;
-
-const motion = (t) => {
-
-  const ease = easeSin(t * 0.001); // retrieve the sine (0.0, 1.0)
-  const x = rad + ease * (300 - rad * 2);
-  const y = 100;
-  
-  ctx3.clearRect(0, 0, ctx.canvas3.width, ctx.canvas3.height);
-  ctx3.beginPath();
-  ctx3.fillStyle = "blue";
-  ctx3.arc(x, y, rad, 0, Math.PI * 2);
-  ctx3.fill();
-  ctx3.closePath();
-
-  requestAnimationFrame(motion);
-};
-
-motion();
-*/
-function motion(){
-  console.log(performance.now());
-}
 </script>
 </body>
 </html>
