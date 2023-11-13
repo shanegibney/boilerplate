@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <h3>Periphal Vision Checker</h3>
+  <canvas id='canvas5' width="500" height="250" style='border:2px double#780dc4;'></canvas>ctx5<br>
+  <input id="perVision" type="button" value="Start" onclick="perVision();"/><hr>
   <canvas id='canvas4' width="500" height="250" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
-  <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/> <!--Working on line 218 linear to circular motion-->
+  <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/> 
   <hr>
   <canvas id='canvas3' width="500" height="250" style='border:2px double#00FFFF;'></canvas>ctx3<br>
   <input id="pulsing" type="button" value="Animate pulsing" onclick="togglePause();"/>
@@ -138,6 +141,70 @@ const canvas3 = document.getElementById("canvas3");
 const ctx3 = canvas3.getContext("2d"); 
 const canvas4 = document.getElementById("canvas4");
 const ctx4 = canvas4.getContext("2d"); 
+const canvas5 = document.getElementById("canvas5");
+const ctx5 = canvas5.getContext("2d");
+
+let counter = 0;
+//Create settings for:
+//background colour
+//colour of dot (when on)
+//size of dot 
+//colour of crosshair
+//size of crosshair
+//type of crosshair lines crossed, triangle, square, circle, star
+//time dot is on for
+//time dot is off for
+//TimeOn and timeOff is actually a random number between 5s and number
+//chosen which has to be less than 30s.
+//session time a multiple of the sum of timeOn and timeoff.
+let session = 0;//has to be a number between 30s and 10 minutes
+let timeOn = 0;//must be less than session, greater than 5s and less than 30s
+let timeOff = 0;//must be less than session, greater than 5s and less than 30s
+//If you know timeOn and timeOff, session can be calculated as a multiple of the sum of those.
+function perVision(){
+  requestAnimationFrame(perVision);
+    //ctx5.clearRect(0,0,innerWidth,innerHeight);
+    if(true){//are we in last 10secs of session,session-10s
+      timer();
+    } else {
+      if(true){//condition time in on for
+        flashOn();
+      } else {
+        flashOff();
+      }
+    }
+  counter++;
+}
+
+function flashOn(){
+  ctx5.beginPath();
+    ctx5.fillStyle = 'lightblue';
+    ctx5.arc(counter, 100, 10, 0, 2 * Math.PI);
+    ctx5.fill()
+    if(true){// time is on for
+      flashOff()//Go to off function
+    }else{
+      flashOn()//Go to on function again
+    }
+}
+
+function flashOff(){
+  ctx5.beginPath();
+    ctx5.filltyle = 'white';//to be same as background colour
+    ctx5.arc(counter, 100, 10, 0, 2 * Math.PI);
+    ctx5.fill()
+    if(true){//if finished being off
+      flashOn()//Go to on function
+    }else{
+      flashOff()//Go to off function again
+    }
+}
+
+function timer(){
+  //write 10s countdown timer
+  //when it gets to 0 go to results page with ability to save and print pdf
+}
+
 let minRad = 10;
 let rangeRad = 20;
 let p = 0;
@@ -199,18 +266,9 @@ let d = 0;
   let pauseShow = false;
   
   let wave = [100,200,200,100];
-
+//circular to linear motion
   function show(){
-/*ctx4.beginPath();
-ctx4.lineWidth = 2;
-ctx4.moveTo(0,0);
-for (let jj = 1; jj < wave.length; jj += 2) {
-//console.log('jj = ' + jj)
-//ctx4.clearRect(0,0,innerWidth,innerHeight);
-ctx4.lineTo(jj,jj+1);
-}
-ctx4.stroke();
-*/
+
   if (!pauseShow)
      requestAnimationFrame(show);
   //d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
@@ -231,20 +289,7 @@ ctx4.stroke();
 x2 = 25 * Math.sin(theta) + 62.5;//Theta must be in radians. 25 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
 y2 = 25 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 25 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
 
-//ctx4.beginPath();
-//ctx4.fillStyle = "orange";
 
-/*console.log('sin(' + theta + ') = ' + Math.sin(theta));
-console.log('x2 = ' + x2);
-console.log('y2 = ' + y2);*/
-//ctx4.arc(x1, y1, r1, 0, 2 * Math.PI);
-//ctx4.fill();
-
-/*ctx4.beginPath();
-ctx4.fillStyle = "orange";
-ctx4.arc(x1, y1, r1, 0, 2 * Math.PI);
-ctx4.fill();
-*/
 
 /*ctx4.beginPath();
 ctx4.fillStyle = 'Green';
@@ -328,7 +373,7 @@ function animation(){
 let bgcolour = document.getElementById("bgball").value;
 console.log('in animation: bgcolour = ' + bgcolour);
 
-//Draw a background rectangle
+//Draw a background rectangle on bouncing ball
 ctx.beginPath();
 ctx.fillStyle = bgcolour;
 ctx.fillRect(0,0,canvas.width,canvas.height);
