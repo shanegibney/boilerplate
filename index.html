@@ -28,14 +28,9 @@
     <canvas id="canvas2" width="800" height="300" style='border:2px dashed #0000FF;'></canvas>ctx2
     <input id="ani" type="button" value="Animate bouncing ball"
     onclick="toggleanimation();"/>
-
-    <br>
-    To do:<br>
-    2. Add button to change background colour.<br>
-    <hr>
-    <h3>Submit form background colour for canvas</h3>
-    <!--<input id="canvasColour" type="color" value="canvas background colour" onclick="colour();"/>-->
-    <hr>
+    <br>Background:<input type="color" id="bgball" value="bgball" name="bgball">
+  <input id="bgballid" type="button" value="submit" onclick="bgball();"/>Not working yet!
+  <hr>
     <h3><input type="button" value="Reload page" onclick="window.location.reload();"></h3>
     <hr>
     <h3>Random numbers 1 - 10</h3>
@@ -164,10 +159,7 @@ ctx3.clearRect(0,0,canvas3.width,canvas3.height)
 ctx3.beginPath();
 ctx3.arc(x,y,rad,0,Math.PI*2);
 ctx3.stroke();
-
-  //requestAnimationFrame(pulse);
 }
-
 
 canvas3.addEventListener("mousemove",function(info){
 x=info.offsetX;
@@ -186,6 +178,9 @@ function togglePause() {
 	   document.getElementById("pulsing").value = "Animate pulsing";
     }
 }
+
+
+
 let theta = 0;
 let d = 0;
   let F = 0;
@@ -225,8 +220,6 @@ ctx4.stroke();
   //From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
   //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
   
-  //console.log('shhhhhhhaneeeeee');
-
 //ctx4.beginPath();
 //ctx4.clearRect(0,0,innerWidth,innerHeight);
 //ctx4.lineWidth = 4;
@@ -319,6 +312,7 @@ function toggleshow() {//4th canvas ctx4
 	   document.getElementById("sin").value = "Circular to linear motion";
     }
 }
+let bgcolour;//declare variable outside function
 
 let n = 100;
 let o = 100;
@@ -341,7 +335,6 @@ ctx2.strokeStyle = "black";
 ctx2.lineWidth = 2;
 ctx2.arc(n , o, radius, 0, 2 * Math.PI);
 ctx2.stroke();
-  //animate();
   if (n + radius > canvas2.width || n - radius < 0){
     dx = -dx;
   }
@@ -378,6 +371,16 @@ function submit(){
     document.getElementById("min").innerHTML = min;
     document.getElementById("max").innerHTML = max;
 }
+
+function bgball(){//background of ball
+    bgcolour = document.getElementById("bgball").value;//This variable is declared on line 315
+  console.log('inside' + bgcolour);//Inside function bgball()
+  //call animation() and pass in bgcolour parameter.
+}
+
+
+console.log('outside' + bgcolour);//Outside the function bgball() line 376
+//Trying to get this variable bgcolour into the animation() function which is on line 325. 
 
 function rand() {
  let ran = generateRandomInteger(1,11);
