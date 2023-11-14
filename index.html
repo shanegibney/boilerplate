@@ -12,9 +12,11 @@
   <input id="perVision" type="button" value="Start" onclick="perVision();"/><hr>
   <canvas id='canvas4' width="500" height="250" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
   <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/> 
+  <br>Background:<input type="color" id="bgmotion" value="bgmotion" name="bgmotion">
   <hr>
   <canvas id='canvas3' width="500" height="250" style='border:2px double#00FFFF;'></canvas>ctx3<br>
   <input id="pulsing" type="button" value="Animate pulsing" onclick="togglePause();"/>
+  <br>Background:<input type="color" id="bgpulse" value="bgpulse" name="bgpulse">
   <hr>
     <canvas id='canvas1' width="500" height="250" style='border:2px dotted #FF0000;'></canvas>ctx<br>
     <input id="canvasCircle" type="button" value="circle" onclick="circle();"/>
@@ -32,7 +34,7 @@
     <input id="ani" type="button" value="Animate bouncing ball"
     onclick="toggleanimation();"/>
     <br>Background:<input type="color" id="bgball" value="bgball" name="bgball">
-  <input id="bgballid" type="button" value="submit" onclick="animation();"/>Not working yet! Can get the colour from the form into JS function but can't use it.
+<!--<input id="bgballid" type="button" value="submit" onclick="animation"/>-->
   <hr>
     <h3><input type="button" value="Reload page" onclick="window.location.reload();"></h3>
     <hr>
@@ -217,12 +219,22 @@ let pulsePause = true;
 function pulse(){
   if(!pulsePause)
   requestAnimationFrame(pulse);
+  let bgpulse = document.getElementById("bgpulse").value;
+  //console.log('in animation: bgpulse = ' + bgpulse);
   p=p+0.02;
 if(p>1){
   p=0
 }
 const rad=minRad+rangeRad*p;
+
 ctx3.clearRect(0,0,canvas3.width,canvas3.height)
+ctx3.clearRect(0,0,innerWidth,innerHeight);
+ctx3.beginPath();
+ctx3.fillStyle = bgpulse;
+ctx3.rect(0, 0, innerWidth, innerHeight);
+//ctx2.arc(n+100, o+100, radius, 0, 2 * Math.PI);
+ctx3.fill();
+ctx3.closePath();
 ctx3.beginPath();
 ctx3.arc(x,y,rad,0,Math.PI*2);
 ctx3.stroke();
@@ -271,6 +283,8 @@ let d = 0;
 
   if (!pauseShow)
      requestAnimationFrame(show);
+     let bgmotion = document.getElementById("bgmotion").value;
+     //console.log('in animation: bgmotion = ' + bgmotion);
   //d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
   //F=g*m1*m2/pow(d,2);//Universal law of gravitation
   //m1 and m2 must be dependent on r1 and r2 respectively
@@ -296,9 +310,14 @@ ctx4.fillStyle = 'Green';
 ctx4.arc(62.5, 62.5, 50, 0, 2 * Math.PI);
 ctx4.fill();
 */
-
-ctx4.beginPath();
 ctx4.clearRect(0,0,innerWidth,innerHeight);
+ctx4.beginPath();
+ctx4.fillStyle = bgmotion;
+ctx4.rect(0, 0, innerWidth, innerHeight);
+//ctx2.arc(n+100, o+100, radius, 0, 2 * Math.PI);
+ctx4.fill();
+ctx4.closePath();
+ctx4.beginPath();
 ctx4.lineWidth = 2;
 ctx4.moveTo(x2,y2);//centre of circle
 ctx4.lineTo(62.5,y2 + 70);//elbow
@@ -373,23 +392,24 @@ function animation(){
 let bgcolour = document.getElementById("bgball").value;
 console.log('in animation: bgcolour = ' + bgcolour);
 
-//Draw a background rectangle on bouncing ball
-ctx.beginPath();
-ctx.fillStyle = bgcolour;
-ctx.fillRect(0,0,canvas.width,canvas.height);
-ctx.fill();
-ctx.closePath();
-
   ctx2.clearRect(0,0,innerWidth,innerHeight);
+  ctx2.beginPath();
+ctx2.fillStyle = bgcolour;
+ctx2.rect(0, 0, innerWidth, innerHeight);
+//ctx2.arc(n+100, o+100, radius, 0, 2 * Math.PI);
+ctx2.fill();
+ctx2.closePath();
   ctx2.beginPath();
 ctx2.fillStyle = "green";
 ctx2.arc(n , o, radius, 0, 2 * Math.PI);
 ctx2.fill();
+ctx2.closePath();
 ctx2.beginPath();
 ctx2.strokeStyle = "black";
 ctx2.lineWidth = 2;
 ctx2.arc(n , o, radius, 0, 2 * Math.PI);
 ctx2.stroke();
+ctx2.closePath();
   if (n + radius > canvas2.width || n - radius < 0){
     dx = -dx;
   }
