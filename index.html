@@ -13,6 +13,8 @@
   <canvas id='canvas4' width="500" height="250" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
   <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/> 
   <br>Background:<input type="color" id="bgmotion" value="bgmotion" name="bgmotion">
+  <h5 id="top">Radians</h5><br>
+  <h5 id="bottom">Degrees</h5>
   <hr>
   <canvas id='canvas3' width="500" height="250" style='border:2px double#00FFFF;'></canvas>ctx3<br>
   <input id="pulsing" type="button" value="Animate pulsing" onclick="togglePause();"/>
@@ -274,12 +276,14 @@ let d = 0;
   let y2 = 50;
   let r1 = 10;
   let r2 = 10;
+  let arrA = [];
+  kk = 0;
 
   let pauseShow = true;
   
   let wave = [100,200,200,100];
 //circular to linear motion
-  function show(){
+  function show(){n
 
   if (!pauseShow)
      requestAnimationFrame(show);
@@ -292,52 +296,104 @@ let d = 0;
   //From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
   //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
   
-//ctx4.beginPath();
-//ctx4.clearRect(0,0,innerWidth,innerHeight);
-//ctx4.lineWidth = 4;
-//ctx4.fillStyle = "purple";
-//ctx4.arc(125, 25, 50, 0, 2 * Math.PI);
-//ctx4.ellipse(50, 50, 50, 25, Math.PI/2, 0, 2 * Math.PI);
-//ctx4.fill();
-
-x2 = 25 * Math.sin(theta) + 62.5;//Theta must be in radians. 25 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
-y2 = 25 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 25 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
-
-
-
-/*ctx4.beginPath();
-ctx4.fillStyle = 'Green';
-ctx4.arc(62.5, 62.5, 50, 0, 2 * Math.PI);
-ctx4.fill();
-*/
-ctx4.clearRect(0,0,innerWidth,innerHeight);
 ctx4.beginPath();
+ctx4.clearRect(0,0,innerWidth,innerHeight);
+ctx4.lineWidth = 4;
+ctx4.fillStyle = "purple";
+ctx4.arc(125, 25, 50, 0, 2 * Math.PI);
+ctx4.fill();
+ctx4.closePath();
+
+x2 = 45 * Math.sin(theta) + 62.5;//Theta must be in radians. 25 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
+y2 = 45 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 25 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
+
+ctx4.clearRect(0,0,innerWidth,innerHeight);
+
+
+ctx4.beginPath();
+
 ctx4.fillStyle = bgmotion;
 ctx4.rect(0, 0, innerWidth, innerHeight);
 //ctx2.arc(n+100, o+100, radius, 0, 2 * Math.PI);
 ctx4.fill();
-ctx4.closePath();
 ctx4.beginPath();
-ctx4.lineWidth = 2;
+ctx4.fillStyle = "#FFA500"; //orange colour
+ctx4.arc(62.5, 62.5, 45, 0, 2 * Math.PI);//large circle
+ctx4.fill();
+ctx4.beginPath();
+ctx4.lineWidth = 4;
 ctx4.moveTo(x2,y2);//centre of circle
 ctx4.lineTo(62.5,y2 + 70);//elbow
 ctx4.lineTo(62.5,y2 + 120);//top of piston box
-ctx4.moveTo(62.5-10,120);//top left corner
-ctx4.lineTo(62.5-10,240);// bottom left corner
-ctx4.lineTo(62.5+10,240);// bottom right corner
-ctx4.lineTo(62.5+10,120);// top right corner
-ctx4.lineTo(62.5-10,120);// top left corner to finish
-ctx4.moveTo(62.5+10,y2 + 120);//Top of piston right
-ctx4.lineTo(62.5-10,y2 + 120);//Top of piston left
+ctx4.moveTo(62.5-15,140);//top left corner
+ctx4.lineTo(62.5-15,240);// bottom left corner
+ctx4.lineTo(62.5+15,240);// bottom right corner
+ctx4.lineTo(62.5+15,140);// top right corner
+ctx4.lineTo(62.5-15,140);// top left corner to finish
+ctx4.moveTo(62.5+15,y2 + 120);//Top of piston right
+ctx4.lineTo(62.5-15,y2 + 120);//Top of piston left
 ctx4.moveTo(x2,y2);//Move to centre of red revolving circle
-ctx4.lineTo(100,y2);//arm
+ctx4.lineTo(17.5,y2);//left side of arm
+ctx4.lineTo(107.5,y2);//arm
+ctx4.moveTo(62.5,62.5);//center of orange circle
+ctx4.lineTo(x2,y2);//arm from centre to revoving circle
+
+document.getElementById("top").innerHTML = "Radians = " + theta.toFixed(1);//starting at the top
+document.getElementById("bottom").innerHTML = "Degrees = " + (theta * (180/Math.PI)).toFixed(1) + ' (starting at the top)';
+
+if(theta==0){
+  arrA[0] = 100;
+  arrA[1] = y2;
+  arrA[2] = arrA[0];
+  arrA[3] = arrA[1];
+}
+if(theta>0){
+  arrA[0] = 100;
+  arrA[1] = y2;
+  arrA[2] = 'fkfk';
+  arrA[3] = 'msms';
+  arrA[4] = 'jddd';
+  arrA[5] = 'msskw';
+arrB = arrA;
+  for(kk=arrA.length-1; kk>0; kk--){
+    //arrA[kk+1]=arrA[kk];
+  //console.log('arrA[kk] = ' + arrA[5]);
+  console.log('arrB[' + kk +'] = ' + arrB[kk])
+  }
+}
 
 ctx4.stroke();
-
+    /*
     ctx4.beginPath();
-    ctx4.fillStyle = 'pink';
+    ctx4.fillStyle = 'lightgrey';
     ctx4.arc(x2, y2, r2, 0, 2 * Math.PI);
     ctx4.fill();
+*/
+    //elbow
+    ctx4.beginPath();
+ctx4.fillStyle = "lightgrey";
+ctx4.arc(62.5, y2 + 70, 5, 0, 2 * Math.PI);//elbow
+ctx4.fill();
+
+   // Centre of revolving circle
+   ctx4.beginPath();
+ctx4.fillStyle = "lightgrey";
+ctx4.arc(x2, y2, 10, 0, 2 * Math.PI);
+ctx4.fill();
+
+// Angle of orange circle
+/*
+ctx4.beginPath();
+ctx.strokeStyle = 'lightgrey';
+ctx4.arc(62.5, 62.5, 15, 0, theta + Math.PI);
+ctx4.stroke();
+*/
+x
+// Centre of large circle
+ctx4.beginPath();
+ctx4.fillStyle = "lightgrey";
+ctx4.arc(62.5, 62.5, 5, 0, 2 * Math.PI);
+ctx4.fill();
 
 //let step = 4;
 //for (let ii = -4; ii < canvas4.height; ii += step) {}
@@ -348,21 +404,11 @@ ctx4.stroke();
     ctx4.beginPath();
     ctx4.lineWidth = 2;
     ctx4.strokeStyle = 'lightgrey';
-    
-    /*var xd = 100+ii;
-    console.log('xd + ii = ' + xd + ' + ' + ii + ' ii  = ' + (xd + ii));
-    var yd = 100;
-    var amplitude = 25;
-    var frequency = 20;
-    ctx4.moveTo(xd*ii/10, yd);
-    while (xd < width) {
-        yd = height/2 + amplitude * Math.sin(xd/frequency);
-        ctx4.lineTo(xd, yd);
-        xd += 1;
-    }
-    ctx4.stroke();*/
 
-theta += 0.1;//speed
+theta += 0.04;//speed
+if(theta>2*Math.PI){
+  theta=0;//starts again after every revolution
+}
   }//closes the function show()
 
 function toggleshow() {//4th canvas ctx4
