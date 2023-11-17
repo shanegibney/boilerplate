@@ -280,7 +280,7 @@ let d = 0;
 
   let pauseShow = true;
   
-  let wave = [100,200,200,100];
+  
 //circular to linear motion
   function show(){
 
@@ -338,7 +338,7 @@ ctx4.moveTo(62.5,62.5);//center of orange circle
 ctx4.lineTo(x2,y2);//arm from centre to revoving circle
 document.getElementById("top").innerHTML = "Radians = " + theta.toFixed(1);//starting at the top
 document.getElementById("bottom").innerHTML = "Degrees = " + (theta * (180/Math.PI)).toFixed(1) + ' (starting at the top)';
-arrA.push(y2);//y2 add here
+arrA.unshift(y2);//y2 add here
 console.log('before:' + arrA);
 console.log('start..........................');
 arrA.push('');
@@ -346,7 +346,7 @@ for(kk=arrA.length-1; kk>-1; kk--){
   console.log('kk = ' + kk)
   arrA[kk+1]=arrA[kk];
 }
-arrA[0]=112.5;
+arrA[0]=12.5;
 arrA.pop();
 console.log('after:' + arrA);
 
@@ -356,7 +356,7 @@ ctx4.stroke();
 //draw line or wave
   //forward loop
   ctx4.beginPath();
-  ctx4.moveTo(112.5,y2);
+  ctx4.moveTo(0,y2);
   for(let kkk=0; kkk<arrA.length; kkk++){
     ctx4.lineTo(112.5+(kkk*0.25),arrA[kkk]);
   }
