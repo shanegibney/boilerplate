@@ -11,7 +11,7 @@
   <canvas id='canvas5' width="500" height="250" style='border:2px double#780dc4;'></canvas>ctx5<br>
   <input id="perVision" type="button" value="Start" onclick="perVision();"/><hr>
   <canvas id='canvas4' width="500" height="250" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
-  <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/> 
+  <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/>Incomplete
   <br>Background:<input type="color" id="bgmotion" value="bgmotion" name="bgmotion">
   <h5 id="top">Radians</h5><br>
   <h5 id="bottom">Degrees</h5>
@@ -245,7 +245,6 @@ ctx3.stroke();
 canvas3.addEventListener("mousemove",function(info){
 x=info.offsetX;
 y=info.offsetY;
-
 });
 
 function togglePause() {
@@ -283,7 +282,7 @@ let d = 0;
   
   let wave = [100,200,200,100];
 //circular to linear motion
-  function show(){n
+  function show(){
 
   if (!pauseShow)
      requestAnimationFrame(show);
@@ -337,39 +336,33 @@ ctx4.lineTo(17.5,y2);//left side of arm
 ctx4.lineTo(107.5,y2);//arm
 ctx4.moveTo(62.5,62.5);//center of orange circle
 ctx4.lineTo(x2,y2);//arm from centre to revoving circle
-
 document.getElementById("top").innerHTML = "Radians = " + theta.toFixed(1);//starting at the top
 document.getElementById("bottom").innerHTML = "Degrees = " + (theta * (180/Math.PI)).toFixed(1) + ' (starting at the top)';
-
-if(theta==0){
-  arrA[0] = 100;
-  arrA[1] = y2;
-  arrA[2] = arrA[0];
-  arrA[3] = arrA[1];
+arrA.push(y2);//y2 add here
+console.log('before:' + arrA);
+console.log('start..........................');
+arrA.push('');
+for(kk=arrA.length-1; kk>-1; kk--){
+  console.log('kk = ' + kk)
+  arrA[kk+1]=arrA[kk];
 }
-if(theta>0){
-  arrA[0] = 100;
-  arrA[1] = y2;
-  arrA[2] = 'fkfk';
-  arrA[3] = 'msms';
-  arrA[4] = 'jddd';
-  arrA[5] = 'msskw';
-arrB = arrA;
-  for(kk=arrA.length-1; kk>0; kk--){
-    //arrA[kk+1]=arrA[kk];
-  //console.log('arrA[kk] = ' + arrA[5]);
-  console.log('arrB[' + kk +'] = ' + arrB[kk])
-  }
-}
+arrA[0]=112.5;
+arrA.pop();
+console.log('after:' + arrA);
 
+console.log('end............................');
 ctx4.stroke();
-    /*
-    ctx4.beginPath();
-    ctx4.fillStyle = 'lightgrey';
-    ctx4.arc(x2, y2, r2, 0, 2 * Math.PI);
-    ctx4.fill();
-*/
-    //elbow
+
+//draw line or wave
+  //forward loop
+  ctx4.beginPath();
+  ctx4.moveTo(112.5,y2);
+  for(let kkk=0; kkk<arrA.length; kkk++){
+    ctx4.lineTo(112.5+(kkk*0.25),arrA[kkk]);
+  }
+  ctx4.stroke();
+
+    //elbow circle
     ctx4.beginPath();
 ctx4.fillStyle = "lightgrey";
 ctx4.arc(62.5, y2 + 70, 5, 0, 2 * Math.PI);//elbow
@@ -388,7 +381,7 @@ ctx.strokeStyle = 'lightgrey';
 ctx4.arc(62.5, 62.5, 15, 0, theta + Math.PI);
 ctx4.stroke();
 */
-x
+
 // Centre of large circle
 ctx4.beginPath();
 ctx4.fillStyle = "lightgrey";
@@ -409,7 +402,21 @@ theta += 0.04;//speed
 if(theta>2*Math.PI){
   theta=0;//starts again after every revolution
 }
-  }//closes the function show()
+/*
+arrA[0]='a';
+arrA[1]='b';
+arrA[2]='c';
+arrA[3]='d';
+arrA[4]='e';
+arrA[5]='f';
+arrA[6]='g';
+for(kk=arrA.length-1; kk>0; kk--){
+console.log(kk);
+console.log('before: arrA['+ kk + '] = ' + arrA[kk]);
+arrA[kk+1]=arrA[kk];
+console.log('after: arrA['+ kk + '] = ' + arrA[kk]);
+  }*/
+}//closes the function show()
 
 function toggleshow() {//4th canvas ctx4
   if (pauseShow)
