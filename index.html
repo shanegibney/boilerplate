@@ -333,7 +333,7 @@ ctx4.moveTo(62.5+15,y2 + 120);//Top of piston right
 ctx4.lineTo(62.5-15,y2 + 120);//Top of piston left
 ctx4.moveTo(x2,y2);//Move to centre of red revolving circle
 ctx4.lineTo(17.5,y2);//left side of arm
-ctx4.lineTo(107.5,y2);//arm
+ctx4.lineTo(112.5,y2);//arm
 ctx4.moveTo(62.5,62.5);//center of orange circle
 ctx4.lineTo(x2,y2);//arm from centre to revoving circle
 document.getElementById("top").innerHTML = "Radians = " + theta.toFixed(1);//starting at the top
@@ -356,11 +356,11 @@ ctx4.stroke();
 //draw line or wave
   //forward loop
   ctx4.beginPath();
-  ctx4.moveTo(0,y2);
+  ctx4.moveTo(112.5,y2);
   for(let kkk=0; kkk<arrA.length; kkk++){
-    ctx4.lineTo(112.5+(kkk*0.25),arrA[kkk]);
+    ctx4.lineTo(112.5+(kkk*.25),arrA[kkk]);
   }
-  ctx4.stroke();
+; ctx4.stroke();
 
     //elbow circle
     ctx4.beginPath();
