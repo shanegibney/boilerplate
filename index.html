@@ -299,10 +299,11 @@ let d = 0;
   //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
   //---------------------------------
   //Draw background
-ctx4.clearRect(0,0,innerWidth,innerHeight);
 ctx4.beginPath();
-//console.log(bgmotion);
-ctx4.fillStyle = bgmotion;
+ctx4.clearRect(0,0,innerWidth,innerHeight);
+//console.log(bgmotion);//this logs to the console
+//ctx4.fillStyle = bgmotion;
+ctx4.fillStyle = "#FD0";//this isn't working using an actual colour
 ctx4.fillRect(0, 0, innerWidth, innerHeight);
 ctx4.fill();
  //---------------------------
@@ -389,7 +390,7 @@ document.getElementById("top").innerHTML = "Radians = " + theta.toFixed(1);//sta
 document.getElementById("bottom").innerHTML = "Degrees = " + (theta * (180/Math.PI)).toFixed(1) + ' (starting at the top)';
 //-------------------------------------
 theta += 0.04;//speed
-if(theta>(6*Math.PI)){
+if(theta>(2*Math.PI)){
   theta=0;//starts again after 3 revolutions
 }
 countFrames++;
