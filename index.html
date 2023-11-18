@@ -12,7 +12,7 @@
   <input id="perVision" type="button" value="Start" onclick="perVision();"/><hr>
   <canvas id='canvas4' width="500" height="250" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
   <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/>Incomplete
-  <br>Background:<input type="color" id="bgmotion" value="bgmotion" name="bgmotion">
+  <br>Background:<input type="color" id="bgmotion" value="bg2. Wavemotion" name="bgmotion"><br>To do:<br>Can't get background colour to work line 306<br> 
   <h5 id="top">Radians</h5><br>
   <h5 id="bottom">Degrees</h5>
   <hr>
@@ -297,43 +297,41 @@ let d = 0;
   //a=F/m(rsun);//Newton's 2nd Law where m depends on mass of object you're travelling around
   //From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
   //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
-  
-  x2 = 45 * Math.sin(theta) + 62.5;//Theta must be in radians. 25 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
-  y2 = 45 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 25 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
+  //---------------------------------
+  //Draw background
+ctx4.clearRect(0,0,innerWidth,innerHeight);
+ctx4.beginPath();
+//console.log(bgmotion);
+ctx4.fillStyle = bgmotion;
+ctx4.fillRect(0, 0, innerWidth, innerHeight);
+ctx4.fill();
+ //---------------------------
+  x2 = 45 * Math.sin(theta) + 62.5;//Theta must be in radians. 45 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
+  y2 = 45 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 45 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
 //--------------------------------
-
 ctx4.beginPath();
     ctx4.lineWidth = 2;
     ctx4.strokeStyle = 'black';
-
-  arrA.unshift(y2);//y2 add here
-arrA.push('');
-for(kk=arrA.length-1; kk>-1; kk--){
-  arrA[kk+1]=arrA[kk];
+  arrA.unshift(y2);//add element to beginning with value y2
+arrA.push('');//creates an empty element at the end of the array that kk+1 on the next line existsexists
+for(kk=arrA.length-1; kk>-1; kk--){//Reverse loop
+  arrA[kk+1]=arrA[kk];//moves the wave to the right
 }
-if(countFrames<30){
-  console.log('countFrames = ' + countFrames);
+if(countFrames<700){
 arrA[0]=y2;//Actually adds the y-value to the array
+arrA.pop();//Remove last element of array
+}else{
+  arrA.pop();
+  arrA.pop();
+  arrA.pop();
 }
-arrA.pop();
 ctx4.stroke();
+//now that the array arrA[] is full next draw the wave line 329
 //---------------------------------
-ctx4.clearRect(0,0,innerWidth,innerHeight);
-ctx4.beginPath();
-ctx4.fillStyle = bgmotion;//background
-ctx4.rect(0, 0, innerWidth, innerHeight);
-ctx4.fill();
- //---------------------------
-   // Centre of large circle
-//ctx4.beginPath();
-//ctx4.fillStyle = "lightgrey";
-//ctx4.arc(62.5, 62.5, 5, 0, 2 * Math.PI);
-//ctx4.fill();
-//-------------------------------
 //draw wave
 ctx4.beginPath();
  ctx4.moveTo(112.5,y2);
- for(let kkk=0; kkk<arrA.length; kkk++){
+ for(let kkk=0; kkk<arrA.length; kkk++){//forward loop
    ctx4.clearRect(0,0,innerWidth,innerHeight);
     ctx4.lineTo(112.5+(kkk*.25),arrA[kkk]);
   }
@@ -344,10 +342,22 @@ ctx4.fillStyle = "#FFA500"; //orange colour
 ctx4.arc(62.5, 62.5, 45, 0, 2 * Math.PI);//large circle
 ctx4.fill();
 //------------------------------------
+   // Centre of large circle
+   ctx4.beginPath();
+ctx4.fillStyle = "black";
+ctx4.arc(62.5, 62.5, 5, 0, 2 * Math.PI);
+ctx4.fill();
+//------------------------------------
+   // Rim of large circle
+   ctx4.beginPath();
+ctx4.strokeStyle = "black";
+ctx4.arc(62.5, 62.5, 45, 0, 2 * Math.PI);
+ctx4.stroke();
+//-------------------------------
 // Centre of revolving circle
 ctx4.beginPath();
 ctx4.fillStyle = "black";
-ctx4.arc(x2, y2, 10, 0, 2 * Math.PI);
+ctx4.arc(x2, y2, 5, 0, 2 * Math.PI);
 ctx4.fill();
 //-----------------------------------
 //elbow circle
