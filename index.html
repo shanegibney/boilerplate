@@ -277,6 +277,7 @@ let d = 0;
   let r2 = 10;
   let arrA = [];
   kk = 0;
+  countFrames = 0;
 
   let pauseShow = true;
   
@@ -288,37 +289,73 @@ let d = 0;
      requestAnimationFrame(show);
      let bgmotion = document.getElementById("bgmotion").value;
      //console.log('in animation: bgmotion = ' + bgmotion);
-  //d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
+  
+     //The following six commented lines are irrelevant to this
+     //d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
   //F=g*m1*m2/pow(d,2);//Universal law of gravitation
   //m1 and m2 must be dependent on r1 and r2 respectively
   //a=F/m(rsun);//Newton's 2nd Law where m depends on mass of object you're travelling around
   //From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
   //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
   
-ctx4.beginPath();
-ctx4.clearRect(0,0,innerWidth,innerHeight);
-ctx4.lineWidth = 4;
-ctx4.fillStyle = "purple";
-ctx4.arc(125, 25, 50, 0, 2 * Math.PI);
-ctx4.fill();
-ctx4.closePath();
-
-x2 = 45 * Math.sin(theta) + 62.5;//Theta must be in radians. 25 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
-y2 = 45 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 25 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
-
-ctx4.clearRect(0,0,innerWidth,innerHeight);
-
+  x2 = 45 * Math.sin(theta) + 62.5;//Theta must be in radians. 25 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
+  y2 = 45 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 25 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
+//--------------------------------
 
 ctx4.beginPath();
+    ctx4.lineWidth = 2;
+    ctx4.strokeStyle = 'black';
 
-ctx4.fillStyle = bgmotion;
+  arrA.unshift(y2);//y2 add here
+arrA.push('');
+for(kk=arrA.length-1; kk>-1; kk--){
+  arrA[kk+1]=arrA[kk];
+}
+if(countFrames<30){
+  console.log('countFrames = ' + countFrames);
+arrA[0]=y2;//Actually adds the y-value to the array
+}
+arrA.pop();
+ctx4.stroke();
+//---------------------------------
+ctx4.clearRect(0,0,innerWidth,innerHeight);
+ctx4.beginPath();
+ctx4.fillStyle = bgmotion;//background
 ctx4.rect(0, 0, innerWidth, innerHeight);
-//ctx2.arc(n+100, o+100, radius, 0, 2 * Math.PI);
 ctx4.fill();
+ //---------------------------
+   // Centre of large circle
+//ctx4.beginPath();
+//ctx4.fillStyle = "lightgrey";
+//ctx4.arc(62.5, 62.5, 5, 0, 2 * Math.PI);
+//ctx4.fill();
+//-------------------------------
+//draw wave
+ctx4.beginPath();
+ ctx4.moveTo(112.5,y2);
+ for(let kkk=0; kkk<arrA.length; kkk++){
+   ctx4.clearRect(0,0,innerWidth,innerHeight);
+    ctx4.lineTo(112.5+(kkk*.25),arrA[kkk]);
+  }
+; ctx4.stroke();
+//---------------------------------------
 ctx4.beginPath();
 ctx4.fillStyle = "#FFA500"; //orange colour
 ctx4.arc(62.5, 62.5, 45, 0, 2 * Math.PI);//large circle
 ctx4.fill();
+//------------------------------------
+// Centre of revolving circle
+ctx4.beginPath();
+ctx4.fillStyle = "black";
+ctx4.arc(x2, y2, 10, 0, 2 * Math.PI);
+ctx4.fill();
+//-----------------------------------
+//elbow circle
+ctx4.beginPath();
+ctx4.fillStyle = "black";
+ctx4.arc(62.5, y2 + 70, 5, 0, 2 * Math.PI);//elbow
+ctx4.fill();
+//-----------------------------
 ctx4.beginPath();
 ctx4.lineWidth = 4;
 ctx4.moveTo(x2,y2);//centre of circle
@@ -336,87 +373,19 @@ ctx4.lineTo(17.5,y2);//left side of arm
 ctx4.lineTo(112.5,y2);//arm
 ctx4.moveTo(62.5,62.5);//center of orange circle
 ctx4.lineTo(x2,y2);//arm from centre to revoving circle
+ctx4.stroke();
+//-----------------------------------
 document.getElementById("top").innerHTML = "Radians = " + theta.toFixed(1);//starting at the top
 document.getElementById("bottom").innerHTML = "Degrees = " + (theta * (180/Math.PI)).toFixed(1) + ' (starting at the top)';
-arrA.unshift(y2);//y2 add here
-console.log('before:' + arrA);
-console.log('start..........................');
-arrA.push('');
-for(kk=arrA.length-1; kk>-1; kk--){
-  console.log('kk = ' + kk)
-  arrA[kk+1]=arrA[kk];
-}
-arrA[0]=12.5;
-arrA.pop();
-console.log('after:' + arrA);
-
-console.log('end............................');
-ctx4.stroke();
-
-//draw line or wave
-  //forward loop
-  ctx4.beginPath();
-  ctx4.moveTo(112.5,y2);
-  for(let kkk=0; kkk<arrA.length; kkk++){
-    ctx4.lineTo(112.5+(kkk*.25),arrA[kkk]);
-  }
-; ctx4.stroke();
-
-    //elbow circle
-    ctx4.beginPath();
-ctx4.fillStyle = "lightgrey";
-ctx4.arc(62.5, y2 + 70, 5, 0, 2 * Math.PI);//elbow
-ctx4.fill();
-
-   // Centre of revolving circle
-   ctx4.beginPath();
-ctx4.fillStyle = "lightgrey";
-ctx4.arc(x2, y2, 10, 0, 2 * Math.PI);
-ctx4.fill();
-
-// Angle of orange circle
-/*
-ctx4.beginPath();
-ctx.strokeStyle = 'lightgrey';
-ctx4.arc(62.5, 62.5, 15, 0, theta + Math.PI);
-ctx4.stroke();
-*/
-
-// Centre of large circle
-ctx4.beginPath();
-ctx4.fillStyle = "lightgrey";
-ctx4.arc(62.5, 62.5, 5, 0, 2 * Math.PI);
-ctx4.fill();
-
-//let step = 4;
-//for (let ii = -4; ii < canvas4.height; ii += step) {}
-    var width = ctx4.canvas.width;
-    var height = ctx4.canvas.height;
-    var scale = 20;
-
-    ctx4.beginPath();
-    ctx4.lineWidth = 2;
-    ctx4.strokeStyle = 'lightgrey';
-
+//-------------------------------------
 theta += 0.04;//speed
-if(theta>2*Math.PI){
-  theta=0;//starts again after every revolution
+if(theta>(6*Math.PI)){
+  theta=0;//starts again after 3 revolutions
 }
-/*
-arrA[0]='a';
-arrA[1]='b';
-arrA[2]='c';
-arrA[3]='d';
-arrA[4]='e';
-arrA[5]='f';
-arrA[6]='g';
-for(kk=arrA.length-1; kk>0; kk--){
-console.log(kk);
-console.log('before: arrA['+ kk + '] = ' + arrA[kk]);
-arrA[kk+1]=arrA[kk];
-console.log('after: arrA['+ kk + '] = ' + arrA[kk]);
-  }*/
+countFrames++;
 }//closes the function show()
+
+
 
 function toggleshow() {//4th canvas ctx4
   if (pauseShow)
@@ -443,13 +412,11 @@ function animation(){
   if (!lPause)
      requestAnimationFrame(animation);
 let bgcolour = document.getElementById("bgball").value;
-//console.log('in animation: bgcolour = ' + bgcolour);
 
   ctx2.clearRect(0,0,innerWidth,innerHeight);
   ctx2.beginPath();
 ctx2.fillStyle = bgcolour;
 ctx2.rect(0, 0, innerWidth, innerHeight);
-//ctx2.arc(n+100, o+100, radius, 0, 2 * Math.PI);
 ctx2.fill();
 ctx2.closePath();
   ctx2.beginPath();
