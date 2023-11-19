@@ -264,41 +264,40 @@ function togglePause() {
 
 let theta = 0;
 let d = 0;
-  let F = 0;
-  let a = 0;
-  let v2 =0;
-  let m1 = 0;
-  let m2 = 0;
-  let g = 0;
-  let x1 = 10;
-  let y1 = 100;
-  let x2 = 100;
-  let y2 = 50;
-  let r1 = 10;
-  let r2 = 10;
-  let arrA = [];
-  kk = 0;
-  countFrames = 0;
+let F = 0;
+let a = 0;
+let v2 =0;
+let m1 = 0;
+let m2 = 0;
+let g = 0;
+let x1 = 10;
+let y1 = 100;
+let x2 = 100;
+let y2 = 50;
+let r1 = 10;
+let r2 = 10;
+let arrA = [];
+kk = 0;
+countFrames = 0;
 
-  let pauseShow = true;
-  
+let pauseShow = true;
   
 //circular to linear motion
-  function show(){
+function show(){
 
-  if (!pauseShow)
-     requestAnimationFrame(show);
-     //let bgmotion = document.getElementById("bgmotion").value;
-     //console.log('in animation: bgmotion = ' + bgmotion);
+if (!pauseShow)
+requestAnimationFrame(show);
+//let bgmotion = document.getElementById("bgmotion").value;
+//console.log('in animation: bgmotion = ' + bgmotion);
   
-     //The following six commented lines are irrelevant to this
-     //d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
-  //F=g*m1*m2/pow(d,2);//Universal law of gravitation
-  //m1 and m2 must be dependent on r1 and r2 respectively
-  //a=F/m(rsun);//Newton's 2nd Law where m depends on mass of object you're travelling around
-  //From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
-  //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
-  //---------------------------------
+//The following six commented lines are irrelevant to this
+//d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
+//F=g*m1*m2/pow(d,2);//Universal law of gravitation
+//m1 and m2 must be dependent on r1 and r2 respectively
+//a=F/m(rsun);//Newton's 2nd Law where m depends on mass of object you're travelling around
+//From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
+//v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
+//---------------------------------
 /*
 as of line 629 just to compare
 //Draw yellow rectangle
@@ -308,8 +307,7 @@ ctx.fillRect(shape[7],shape[8],shape[9],shape[10]);
 ctx.fill();
 ctx.closePath();
 */
-//-----------------------------------
-  //Draw background
+//Draw background----------------
 ctx4.beginPath();
 //ctx4.clearRect(0,0,innerWidth,innerHeight);
 //console.log(bgmotion);//this logs to the console
@@ -321,71 +319,61 @@ ctx.fillRect(shape[7],shape[8],shape[9],shape[10]);
 ctx4.fill();//fill() closes the path anyway, there shouldn't be any need for closePath();
 ctx4.closePath();
  //---------------------------
-  x2 = 45 * Math.sin(theta) + 62.5;//Theta must be in radians. 45 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
-  y2 = 45 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 45 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
-//--------------------------------
+x2 = 45 * Math.sin(theta) + 62.5;//Theta must be in radians. 45 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
+y2 = 45 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 45 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
+//Fill array----------------
 ctx4.beginPath();
 ctx4.lineWidth = 2;
 ctx4.strokeStyle = 'black';
-  arrA.unshift(y2);//add element to beginning with value y2
+arrA.unshift(y2);//add element to beginning with value y2
 arrA.push('');//creates an empty element at the end of the array that kk+1 on the next line existsexists
 for(kk=arrA.length-1; kk>-1; kk--){//Reverse loop
-  arrA[kk+1]=arrA[kk];//moves the wave to the right
+arrA[kk+1]=arrA[kk];//moves the wave to the right
 }
 if(countFrames<500){
-arrA[0]=y2;//Actually adds the y-value to the array
+arrA[0]=y2;//Actually adds the y-value to the array to the empty element
 arrA.pop();//Remove last element of array
 }else{
-  arrA.pop();//one element needs to be popped off the end to keep the array the same lenght as it moves right
-  arrA.pop();//one element needs to be popped off the end as an element is unshifted or added to the front of the array
-  arrA.pop();//one element needs to be popped off the end as an element is pushed or added to the end of the array
-  //<array>.unshifted(<value>) - added to the front of an Array
-  //<array>.shifted() - removed from the front of an array
-  //<array>.push(<value>) - add to the end of an array
-  //<array>.pop() - remove from the end of an array
+arrA.pop();//one element needs to be popped off the end to keep the array the same lenght as it moves right
+arrA.pop();//one element needs to be popped off the end as an element is unshifted or added to the front of the array
+arrA.pop();//one element needs to be popped off the end as an element is pushed or added to the end of the array
+//<array>.unshifted(<value>) - added to the front of an Array//
+//<array>.shifted() - removed from the front of an array
+//<array>.push(<value>) - add to the end of an array
+//<array>.pop() - remove from the end of an array
 }
 ctx4.stroke();
 //now that the array arrA[] is full next draw the wave line 329
-//---------------------------------
-//draw wave
+//draw wave------------------------
 ctx4.beginPath();
 let n = 0.5;//how spread out wave is
- ctx4.moveTo(112.5,y2);
+ctx4.moveTo(112.5,y2);
  for(let kkk=0; kkk<arrA.length; kkk++){//forward loop
-   ctx4.clearRect(0,0,innerWidth,innerHeight);
-    ctx4.lineTo(112.5+(kkk*n),arrA[kkk]);//n how spread out the wave is
+ctx4.clearRect(0,0,innerWidth,innerHeight);
+ctx4.lineTo(112.5+(kkk*n),arrA[kkk]);//n how spread out the wave is
   }
-; ctx4.stroke();
-//---------------------------------------
+ctx4.stroke();
+//Large orange circle----------------
 ctx4.beginPath();
 ctx4.fillStyle = "#FFA500"; //orange colour
-ctx4.arc(62.5, 62.5, 45, 0, 2 * Math.PI);//large circle
+ctx4.arc(62.5, 62.5, 45, 0, 2 * Math.PI);
 ctx4.fill();
-//------------------------------------
-   // Centre of large circle
-   ctx4.beginPath();
+//Centre of large circle-----------
+ctx4.beginPath();
 ctx4.fillStyle = "red";
 ctx4.arc(62.5, 62.5, 5, 0, 2 * Math.PI);
 ctx4.fill();
-//------------------------------------
-   // Rim of large circle
-   ctx4.beginPath();
+//Rim of large circle-------------
+ctx4.beginPath();
 ctx4.strokeStyle = "black";
 ctx4.arc(62.5, 62.5, 45, 0, 2 * Math.PI);
 ctx4.stroke();
-//-------------------------------
-// Centre of revolving circle
-ctx4.beginPath();
-ctx4.fillStyle = "red";
-ctx4.arc(x2, y2, 5, 0, 2 * Math.PI);
-ctx4.fill();
-//-----------------------------------
-//elbow of piston
+//elbow of piston--------------------
 ctx4.beginPath();
 ctx4.fillStyle = "red";
 ctx4.arc(62.5, y2 + 70, 5, 0, 2 * Math.PI);//elbow
 ctx4.fill();
-//-----------------------------
+//Piston-----------------------
 ctx4.beginPath();
 ctx4.lineWidth = 4;
 ctx4.moveTo(x2,y2);//centre of circle
@@ -407,15 +395,18 @@ ctx4.stroke();
 //-----------------------------------
 document.getElementById("top").innerHTML = theta.toFixed(1)+ 'rads';//starting at the top
 document.getElementById("bottom").innerHTML = (theta * (180/Math.PI)).toFixed(1)+'&deg';
-//-------------------------------------
+//Centre of revolving circle----------
+ctx4.beginPath();
+ctx4.fillStyle = "red";
+ctx4.arc(x2, y2, 5, 0, 2 * Math.PI);
+ctx4.fill();
+//----------------------------------------
 theta += 0.04;//speed
 if(theta>(2*Math.PI)){
   theta=0;//starts again after 3 revolutions
 }
 countFrames++;
 }//closes the function show()
-
-
 
 function toggleshow() {//4th canvas ctx4
   if (pauseShow)
