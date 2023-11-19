@@ -10,7 +10,7 @@
   <h3>Periphal Vision Checker</h3>
   <canvas id='canvas5' width="500" height="250" style='border:2px double#780dc4;'></canvas>ctx5<br>
   <input id="perVision" type="button" value="Start" onclick="perVision();"/><hr>
-  <canvas id='canvas4' width="700" height="250" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
+  <canvas id='canvas4' width="700" height="450" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
   <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/>
   <!--<br>If this uncommented line 291 also needs to be uncommented. Background:<input type="color" id="bgmotion" value="bg2. Wavemotion" name="bgmotion">--><br>
   <div>Radians and degrees. Starting at the top. Restarts every cycle.</div>
@@ -278,19 +278,17 @@ let r1 = 10;
 let r2 = 10;
 let arrA = [];
 let rev = 0.04;//Speed of revolution
+let nn = 0.5;//How spread out wave is
+let amp = 45;//Amplitude of wave
 kk = 0;
 countFrames = 0;
-
 let pauseShow = true;
-  
-//circular to linear motion
+//circular to linear motion---------------------
 function show(){
-
 if (!pauseShow)
 requestAnimationFrame(show);
 //let bgmotion = document.getElementById("bgmotion").value;
-//console.log('in animation: bgmotion = ' + bgmotion);
-  
+//console.log('in animation: bgmotion = ' + bgmotion)
 //The following six commented lines are irrelevant to this
 //d=Math.sqrt(Math.pow((x2-x1),2)+Math.pow((y2-y1),2));//pythagoras
 //F=g*m1*m2/pow(d,2);//Universal law of gravitation
@@ -319,9 +317,9 @@ ctx.fillRect(shape[7],shape[8],shape[9],shape[10]);
 //ctx4.fillRect(0, 0, innerWidth, innerHeight);//draw a background rectangle
 ctx4.fill();//fill() closes the path anyway, there shouldn't be any need for closePath();
 ctx4.closePath();
- //---------------------------
-x2 = 45 * Math.sin(theta) + 62.5;//Theta must be in radians. 45 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
-y2 = 45 * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 45 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
+ //Degrees and Radians------
+x2 = amp * Math.sin(theta) + 62.5;//Theta must be in radians. 45 radius of circle in x direction. 62.5 is x-coordinate of centre of circle. 
+y2 = amp * Math.cos(theta + Math.PI) + 62.5;//Theta must be in radians. 45 radius of circle in y direction. 62.5 is y-coordinate of centre of circle. 
 //Fill array----------------
 ctx4.beginPath();
 ctx4.lineWidth = 2;
@@ -344,51 +342,62 @@ arrA.pop();//one element needs to be popped off the end as an element is pushed 
 //<array>.pop() - remove from the end of an array
 }
 ctx4.stroke();
-//now that the array arrA[] is full next draw the wave line 329
-//draw wave------------------------
+//now that the array arrA[] is full next draw the wave line 354
+//Paper under wave-------------------
+/*
 ctx4.beginPath();
-let n = 0.5;//how spread out wave is
+ctx4.fillStyle = "green";
+ctx4.fillRect(112.5, 200, 400, amp + 20);
+ctx4.fill();
+*/
+//Draw wave or the array------------------------
+ctx4.beginPath();
 ctx4.moveTo(112.5,y2);
  for(let kkk=0; kkk<arrA.length; kkk++){//forward loop
 ctx4.clearRect(0,0,innerWidth,innerHeight);
-ctx4.lineTo(112.5+(kkk*n),arrA[kkk]);//n how spread out the wave is
+ctx4.lineTo(112.5+(kkk*nn)+20,arrA[kkk]);//nn how spread out the wave is
   }
 ctx4.stroke();
+//Blue air in piston-------------------
+ctx4.beginPath();
+ctx4.fillStyle = "blue";
+ctx4.fillRect(62.5-15, 340, 30, y2-218);
+ctx4.fill();
 //Large orange circle----------------
 ctx4.beginPath();
 ctx4.fillStyle = "#FFA500"; //orange colour
-ctx4.arc(62.5, 62.5, 45, 0, 2 * Math.PI);
+ctx4.arc(62.5, 62.5, amp, 0, 2 * Math.PI);
 ctx4.fill();
-//Centre of large circle-----------
+//Centre of large orange circle-----------
 ctx4.beginPath();
 ctx4.fillStyle = "red";
 ctx4.arc(62.5, 62.5, 5, 0, 2 * Math.PI);
 ctx4.fill();
-//Rim of large circle-------------
+//Rim of large orange circle-------------
 ctx4.beginPath();
 ctx4.strokeStyle = "black";
-ctx4.arc(62.5, 62.5, 45, 0, 2 * Math.PI);
+ctx4.arc(62.5, 62.5, amp, 0, 2 * Math.PI);
 ctx4.stroke();
 //Piston-----------------------
 ctx4.beginPath();
 ctx4.lineWidth = 4;
-ctx4.moveTo(x2,y2);//centre of circle
-ctx4.lineTo(62.5,y2 + 70);//elbow
+ctx4.moveTo(x2,y2);//centre of red circle on edge of orange circle
+ctx4.lineTo(62.5,y2 + 70);//elbow at edge of circle
 ctx4.lineTo(62.5,y2 + 120);//top of piston box
 ctx4.moveTo(62.5-15,140);//top left corner
-ctx4.lineTo(62.5-15,240);// bottom left corner
-ctx4.lineTo(62.5+15,240);// bottom right corner
+ctx4.lineTo(62.5-15,340);// bottom left corner
+ctx4.lineTo(62.5+15,340);// bottom right corner
 ctx4.lineTo(62.5+15,140);// top right corner
 ctx4.lineTo(62.5-15,140);// top left corner to finish
 ctx4.moveTo(62.5+15,y2 + 120);//Top of piston right
 ctx4.lineTo(62.5-15,y2 + 120);//Top of piston left
 ctx4.moveTo(x2,y2);//Move to centre of red revolving circle
 ctx4.lineTo(17.5,y2);//left side of arm
-ctx4.lineTo(112.5,y2);//arm
+ctx4.lineTo(112.5+20,y2);//right side of arm
 ctx4.moveTo(62.5,62.5);//center of orange circle
 ctx4.lineTo(x2,y2);//arm from centre to revoving circle
 ctx4.stroke();
-//elbow of piston--------------------
+//Elbow of piston--------------------
 ctx4.beginPath();
 ctx4.fillStyle = "red";
 ctx4.arc(62.5, y2 + 70, 5, 0, 2 * Math.PI);//elbow
