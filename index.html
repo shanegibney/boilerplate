@@ -277,6 +277,7 @@ let y2 = 50;
 let r1 = 10;
 let r2 = 10;
 let arrA = [];
+let rev = 0.04;//Speed of revolution
 kk = 0;
 countFrames = 0;
 
@@ -368,11 +369,6 @@ ctx4.beginPath();
 ctx4.strokeStyle = "black";
 ctx4.arc(62.5, 62.5, 45, 0, 2 * Math.PI);
 ctx4.stroke();
-//elbow of piston--------------------
-ctx4.beginPath();
-ctx4.fillStyle = "red";
-ctx4.arc(62.5, y2 + 70, 5, 0, 2 * Math.PI);//elbow
-ctx4.fill();
 //Piston-----------------------
 ctx4.beginPath();
 ctx4.lineWidth = 4;
@@ -392,18 +388,23 @@ ctx4.lineTo(112.5,y2);//arm
 ctx4.moveTo(62.5,62.5);//center of orange circle
 ctx4.lineTo(x2,y2);//arm from centre to revoving circle
 ctx4.stroke();
-//-----------------------------------
+//elbow of piston--------------------
+ctx4.beginPath();
+ctx4.fillStyle = "red";
+ctx4.arc(62.5, y2 + 70, 5, 0, 2 * Math.PI);//elbow
+ctx4.fill();
+//Degrees to radians-----------------------
 document.getElementById("top").innerHTML = theta.toFixed(1)+ 'rads';//starting at the top
 document.getElementById("bottom").innerHTML = (theta * (180/Math.PI)).toFixed(1)+'&deg';
-//Centre of revolving circle----------
+//Centre of revolving circle--------------
 ctx4.beginPath();
 ctx4.fillStyle = "red";
 ctx4.arc(x2, y2, 5, 0, 2 * Math.PI);
 ctx4.fill();
-//----------------------------------------
-theta += 0.04;//speed
+//Speed of revolution-------------------
+theta += rev;//speed
 if(theta>(2*Math.PI)){
-  theta=0;//starts again after 3 revolutions
+  theta=0;//starts again after 1 revolution
 }
 countFrames++;
 }//closes the function show()
