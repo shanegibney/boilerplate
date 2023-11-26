@@ -10,6 +10,12 @@
   <h3>Periphal Vision Checker</h3>
   <canvas id='canvas5' width="500" height="250" style='border:2px double#780dc4;'></canvas>ctx5<br>
   <input id="perVision" type="button" value="Start" onclick="perVision();"/><hr>
+  <div id="timestamp"></div>
+  <div id="stamp"></div>
+  <div id="ttamp"></div>
+  <div id="timeamp"></div>
+    <div id="now"></div>
+  <hr>
   <canvas id='canvas4' width="700" height="450" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
   <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/>
   <!--<br>If this uncommented line 291 also needs to be uncommented. Background:<input type="color" id="bgmotion" value="bg2. Wavemotion" name="bgmotion">--><br>
@@ -127,6 +133,7 @@ let j = 0;
 let k = 0;
 let solidIncr = 0;
 let l = 1;
+//Generate random numbers
 let min = 0;
 let max = 0;
 let int = 0;
@@ -135,9 +142,8 @@ let colour = [];
 function generateRandomInteger(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
-
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d"); 
 const canvas2 = document.getElementById("canvas2");
@@ -148,8 +154,8 @@ const canvas4 = document.getElementById("canvas4");
 const ctx4 = canvas4.getContext("2d"); 
 const canvas5 = document.getElementById("canvas5");
 const ctx5 = canvas5.getContext("2d");
-
-let counter = 0;
+//peripheral vision---------------------------
+let counterp = 0;//peripheral vision variables
 //Create settings for:
 //background colour
 //colour of dot (when on)
@@ -166,7 +172,32 @@ let session = 0;//has to be a number between 30s and 10 minutes
 let timeOn = 0;//must be less than session, greater than 5s and less than 30s
 let timeOff = 0;//must be less than session, greater than 5s and less than 30s
 //If you know timeOn and timeOff, session can be calculated as a multiple of the sum of those.
+const currentDate = new Date();
+const timestamp = Date.now();
+const tstamp = currentDate.getTime();
+
+const currentTime = Date.now();
+const dateObject = new Date(currentTime);
+
+var ttamp = new Date().getTime();
+console.log(ttamp);
+
+var timeamp = new Date().valueOf();
+
+const now = Date.now(); 
+
 function perVision(){
+
+document.getElementById("timestamp").innerHTML = (timestamp + ' = timestamp');
+
+document.getElementById("stamp").innerHTML = (tstamp + ' = tstamp');
+
+document.getElementById("ttamp").innerHTML = (ttamp + ' = ttamp');
+  
+document.getElementById("timeamp").innerHTML = (timeamp + ' = timeamp');
+  
+document.getElementById("now").innerHTML = (now + ' = now');
+//get current start time
   requestAnimationFrame(perVision);
     //ctx5.clearRect(0,0,innerWidth,innerHeight);
     if(true){//are we in last 10secs of session,session-10s
@@ -178,15 +209,15 @@ function perVision(){
         flashOff();
       }
     }
-  counter++;
+  counterp++;
 }
 
 function flashOn(){
   ctx5.beginPath();
     ctx5.fillStyle = 'lightblue';
-    ctx5.arc(counter, 100, 10, 0, 2 * Math.PI);
+    ctx5.arc(counterp, 100, 10, 0, 2 * Math.PI);
     ctx5.fill()
-    if(true){// time is on for
+    if(false){// time is on for
       flashOff()//Go to off function
     }else{
       flashOn()//Go to on function again
@@ -196,7 +227,7 @@ function flashOn(){
 function flashOff(){
   ctx5.beginPath();
     ctx5.filltyle = 'white';//to be same as background colour
-    ctx5.arc(counter, 100, 10, 0, 2 * Math.PI);
+    ctx5.arc(counterp, 100, 10, 0, 2 * Math.PI);
     ctx5.fill()
     if(true){//if finished being off
       flashOn()//Go to on function
