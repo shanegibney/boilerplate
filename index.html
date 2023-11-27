@@ -9,12 +9,21 @@
 <body>
   <h3>Periphal Vision Checker</h3>
   <canvas id='canvas5' width="500" height="250" style='border:2px double#780dc4;'></canvas>ctx5<br>
-  <input id="perVision" type="button" value="Start" onclick="perVision();"/><hr>
-  <div id="timestamp"></div>
-  <div id="stamp"></div>
-  <div id="ttamp"></div>
-  <div id="timeamp"></div>
-    <div id="now"></div>
+  <div id="now"></div>
+      <h3>Random on and off values.</h3>
+  <span id="on">Generates a random time flash is on between <span id="minOn">5</span> and <span id="maxOn">30</span> seconds.</span><br>
+    min (5-15):<input type="range" id="minimOn" value="10" name="minimumOn" min="5" max="15" step="1" oninput="this.nextElementSibling.value = this.value">
+    <output>10</output><br>
+    max (16-30):<input type="range" id="maximOn" value="20" name="maximumOn" min="16" max="30" step="1" oninput="this.nextElementSibling.value = this.value">
+    <output>20</output><br>
+  <p id="rangeOn">valueOn</p>
+  <span id="off">Generates a random time flash is off between <span id="minOff">5</span> and <span id="maxOff">30</span> seconds.</span><br>
+  min (5-15):<input type="range" id="minimOff" value="10" name="minimumOff" min="5" max="15" step="1" oninput="this.nextElementSibling.value = this.value">
+    <output>10</output><br>     
+    max (16-30):<input type="range" id="maximOff" value="20" name="maximumOff" min="16" max="30" step="1" oninput="this.nextElementSibling.value = this.value">
+    <output>20</output><br>
+  <p id="rangeOff">valueOff</p>
+  <input id="submitid" type="button" value="Submit" onclick="flash();"/>
   <hr>
   <canvas id='canvas4' width="700" height="450" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
   <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/>
@@ -46,7 +55,7 @@
 <!--<input id="bgballid" type="button" value="submit" onclick="animation"/>-->
   <hr>
     <h3><input type="button" value="Reload page" onclick="window.location.reload();"></h3>
-    <hr>
+
     <h3>Random numbers 1 - 10</h3>
     <input id="random" type="button" value="Submit" onclick="rand();"/>
     <p id="rand">value</p>
@@ -172,31 +181,11 @@ let session = 0;//has to be a number between 30s and 10 minutes
 let timeOn = 0;//must be less than session, greater than 5s and less than 30s
 let timeOff = 0;//must be less than session, greater than 5s and less than 30s
 //If you know timeOn and timeOff, session can be calculated as a multiple of the sum of those.
-const currentDate = new Date();
-const timestamp = Date.now();
-const tstamp = currentDate.getTime();
-
-const currentTime = Date.now();
-const dateObject = new Date(currentTime);
-
-var ttamp = new Date().getTime();
-console.log(ttamp);
-
-var timeamp = new Date().valueOf();
 
 const now = Date.now(); 
 
 function perVision(){
-
-document.getElementById("timestamp").innerHTML = (timestamp + ' = timestamp');
-
-document.getElementById("stamp").innerHTML = (tstamp + ' = tstamp');
-
-document.getElementById("ttamp").innerHTML = (ttamp + ' = ttamp');
-  
-document.getElementById("timeamp").innerHTML = (timeamp + ' = timeamp');
-  
-document.getElementById("now").innerHTML = (now + ' = now');
+//
 //get current start time
   requestAnimationFrame(perVision);
     //ctx5.clearRect(0,0,innerWidth,innerHeight);
@@ -517,6 +506,27 @@ function toggleanimation() {
     }
 }
 
+function flash(){//line 16
+  document.getElementById("now").innerHTML = (now + 'ms = now: time in milliseconds since 00:00 1st January 1970 the beginning of UNIX time. <br>');
+     minOn = document.querySelector("#minimOn").value; 
+     maxOn = document.querySelector("#maximOn").value;
+     minOn = parseInt(minOn);
+     maxOn = parseInt(maxOn);
+    let intOn = generateRandomInteger(minOn,maxOn);
+    document.getElementById("rangeOn").innerHTML = 'This is the time the flash is on for: ' + intOn + ' seconds';
+    document.getElementById("minOn").innerHTML = minOn ;
+    document.getElementById("maxOn").innerHTML = maxOn;
+    minOff = document.querySelector("#minimOff").value; 
+     maxOff = document.querySelector("#maximOff").value;
+     minOff = parseInt(minOff);
+     maxOff = parseInt(maxOff);
+    let intOff = generateRandomInteger(minOff,maxOff);
+    document.getElementById("rangeOff").innerHTML = 'This is the time the flash is off for: ' + intOff + ' seconds';
+    document.getElementById("minOff").innerHTML = minOff ;
+    document.getElementById("maxOff").innerHTML = maxOff;
+    document.getElementById("minOff").innerHTML = minOff;
+    document.getElementById("maxOff").innerHTML = maxOff;
+}
 
 function submit(){
      min = document.querySelector("#minim").value; 
