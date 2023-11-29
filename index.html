@@ -16,14 +16,14 @@
     <output>10</output><br>
     max (16-30):<input type="range" id="maximOn" value="20" name="maximumOn" min="16" max="30" step="1" oninput="this.nextElementSibling.value = this.value">
     <output>20</output><br>
-  <p id="rangeOn">valueOn</p>
+  <p id="rangeOn">Time for flash to be on. To be calculated.</p>
   <span id="off">Generates a random time flash is off between <span id="minOff">5</span> and <span id="maxOff">30</span> seconds.</span><br>
   min (5-15):<input type="range" id="minimOff" value="10" name="minimumOff" min="5" max="15" step="1" oninput="this.nextElementSibling.value = this.value">
     <output>10</output><br>     
     max (16-30):<input type="range" id="maximOff" value="20" name="maximumOff" min="16" max="30" step="1" oninput="this.nextElementSibling.value = this.value">
     <output>20</output><br>
-  <p id="rangeOff">valueOff</p>
-  <input id="submitid" type="button" value="Submit" onclick="flash();"/>
+  <p id="rangeOff">Time for flash to be off. To be calculated.</p> 
+  <input id="submitid" type="button" value="Run" onclick="flash();"/>
   <hr>
   <canvas id='canvas4' width="700" height="450" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
   <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/>
@@ -163,72 +163,7 @@ const canvas4 = document.getElementById("canvas4");
 const ctx4 = canvas4.getContext("2d"); 
 const canvas5 = document.getElementById("canvas5");
 const ctx5 = canvas5.getContext("2d");
-//peripheral vision---------------------------
-let counterp = 0;//peripheral vision variables
-//Create settings for:
-//background colour
-//colour of dot (when on)
-//size of dot 
-//colour of crosshair
-//size of crosshair
-//type of crosshair lines crossed, triangle, square, circle, star
-//time dot is on for
-//time dot is off for
-//TimeOn and timeOff is actually a random number between 5s and number
-//chosen which has to be less than 30s.
-//session time a multiple of the sum of timeOn and timeoff.
-let session = 0;//has to be a number between 30s and 10 minutes
-let timeOn = 0;//must be less than session, greater than 5s and less than 30s
-let timeOff = 0;//must be less than session, greater than 5s and less than 30s
-//If you know timeOn and timeOff, session can be calculated as a multiple of the sum of those.
-
-const now = Date.now(); 
-
-function perVision(){
-//
-//get current start time
-  requestAnimationFrame(perVision);
-    //ctx5.clearRect(0,0,innerWidth,innerHeight);
-    if(true){//are we in last 10secs of session,session-10s
-      timer();
-    } else {
-      if(true){//condition time in on for
-        flashOn();
-      } else {
-        flashOff();
-      }
-    }
-  counterp++;
-}
-
-function flashOn(){
-  ctx5.beginPath();
-    ctx5.fillStyle = 'lightblue';
-    ctx5.arc(counterp, 100, 10, 0, 2 * Math.PI);
-    ctx5.fill()
-    if(false){// time is on for
-      flashOff()//Go to off function
-    }else{
-      flashOn()//Go to on function again
-    }
-}
-
-function flashOff(){
-  ctx5.beginPath();
-    ctx5.filltyle = 'white';//to be same as background colour
-    ctx5.arc(counterp, 100, 10, 0, 2 * Math.PI);
-    ctx5.fill()
-    if(true){//if finished being off
-      flashOn()//Go to on function
-    }else{
-      flashOff()//Go to off function again
-    }
-}
-
-function timer(){
-  //write 10s countdown timer
-  //when it gets to 0 go to results page with ability to save and print pdf
-}
+//----------------------------------------------------------
 
 let minRad = 10;
 let rangeRad = 20;
@@ -505,15 +440,16 @@ function toggleanimation() {
 	   document.getElementById("ani").value = "Animate bouncing ball";
     }
 }
+const now = Date.now(); 
 
-function flash(){//line 16
+function flash(){//called line 16
   document.getElementById("now").innerHTML = (now + 'ms = now: time in milliseconds since 00:00 1st January 1970 the beginning of UNIX time. <br>');
      minOn = document.querySelector("#minimOn").value; 
      maxOn = document.querySelector("#maximOn").value;
      minOn = parseInt(minOn);
      maxOn = parseInt(maxOn);
     let intOn = generateRandomInteger(minOn,maxOn);
-    document.getElementById("rangeOn").innerHTML = 'This is the time the flash is on for: ' + intOn + ' seconds';
+    document.getElementById("rangeOn").innerHTML = 'This is the time the flash is <strong>on</strong> for: ' + intOn + ' seconds';
     document.getElementById("minOn").innerHTML = minOn ;
     document.getElementById("maxOn").innerHTML = maxOn;
     minOff = document.querySelector("#minimOff").value; 
@@ -521,11 +457,71 @@ function flash(){//line 16
      minOff = parseInt(minOff);
      maxOff = parseInt(maxOff);
     let intOff = generateRandomInteger(minOff,maxOff);
-    document.getElementById("rangeOff").innerHTML = 'This is the time the flash is off for: ' + intOff + ' seconds';
+    document.getElementById("rangeOff").innerHTML = 'This is the time the flash is <strong>off</strong> for: ' + intOff + ' seconds';
     document.getElementById("minOff").innerHTML = minOff ;
     document.getElementById("maxOff").innerHTML = maxOff;
     document.getElementById("minOff").innerHTML = minOff;
     document.getElementById("maxOff").innerHTML = maxOff;
+}
+
+//peripheral vision---------------------------
+let counterp = 0;//peripheral vision variables
+//Create settings for:
+//background colour
+//colour of dot (when on)
+//size of dot 
+//colour of crosshair
+//size of crosshair
+//type of crosshair lines crossed, triangle, square, circle, star
+//time dot is on for
+//time dot is off for
+//TimeOn and timeOff is actually a random number between 5s and number
+//chosen which has to be less than 30s.
+//session time a multiple of the sum of timeOn and timeoff.
+let session = 0;//has to be a number between 30s and 10 minutes
+let timeOn = 0;//must be less than session, greater than 5s and less than 30s
+let timeOff = 0;//must be less than session, greater than 5s and less than 30s
+//If you know timeOn and timeOff, session can be calculated as a multiple of the sum of those.
+
+
+
+function perVision(){
+  requestAnimationFrame(perVision);
+    //ctx5.clearRect(0,0,innerWidth,innerHeight);
+    if(true){//are we in last 10secs of session,session-10s
+      timer(true);
+    } else {
+      if(true){//condition time is on for
+        flashOn();
+      } else {
+        flashOff();
+      }
+    }
+  counterp++;
+}
+
+function flashOn(){
+  ctx5.beginPath();
+    ctx5.fillStyle = 'lightblue';
+    ctx5.arc(counterp, 100, 10, 0, 2 * Math.PI);
+    ctx5.fill()
+    if(false){// time is on for
+      flashOff()//Go to off function
+    }else{
+      flashOn()//Go to on function again
+    }
+}
+
+function flashOff(){
+  ctx5.beginPath();
+    ctx5.filltyle = 'white';//to be same as background colour
+    ctx5.arc(counterp, 100, 10, 0, 2 * Math.PI);
+    ctx5.fill()
+    if(true){//if finished being off
+      flashOn()//Go to on function
+    }else{
+      flashOff()//Go to off function again
+    }
 }
 
 function submit(){
