@@ -23,6 +23,13 @@
     max (16-30):<input type="range" id="maximOff" value="20" name="maximumOff" min="16" max="30" step="1" oninput="this.nextElementSibling.value = this.value">
     <output>20</output><br>
   <p id="rangeOff">Time for flash to be off. To be calculated.</p> 
+  <span id="testtest"></span><br>
+  <span id="test1"></span><br><!--now-->
+  <span id="test2"></span><br><!--session-->
+  <span id="test3"></span><br><!--intOff-->
+  <span id="test4"></span><br><!--intOn-->
+  <span id="test5"></span><br><!--cycle-->
+  <span id="test6"></span><br><!--on/off-->
   <input id="submitid" type="button" value="Run" onclick="flash();"/>
   <hr>
   <canvas id='canvas4' width="700" height="450" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
@@ -462,7 +469,28 @@ function flash(){//called line 16
     document.getElementById("maxOff").innerHTML = maxOff;
     document.getElementById("minOff").innerHTML = minOff;
     document.getElementById("maxOff").innerHTML = maxOff;
+      var session = 300;//will come from a form input
+  perVision(intOn,intOff,session);
+  
 }
+
+ function perVision(intOn,intOff,session){
+      //requestAnimationFrame(perVision);
+       document.getElementById("testtest").innerHTML = 'hello world!';
+       document.getElementById("test1").innerHTML = 'now = ' + now;
+       document.getElementById("test2").innerHTML = 'session = ' + session;
+      document.getElementById("test3").innerHTML = 'intOn = ' + intOn; 
+      document.getElementById("test4").innerHTML = 'intOff = ' + intOff; 
+      var cycle = intOn + intOff;
+      document.getElementById("test5").innerHTML = 'cycle = intOn + intOff = ' + cycle; 
+      if (session>intOn){
+       document.getElementById("test6").innerHTML = 'on';
+       flashOn();
+      }else{
+      document.getElementById("test6").innerHTML = 'off';
+      flashOff();
+      }
+    }
 
 //peripheral vision---------------------------
 let counterp = 0;//peripheral vision variables
@@ -483,12 +511,8 @@ let timeOn = 0;//must be less than session, greater than 5s and less than 30s
 let timeOff = 0;//must be less than session, greater than 5s and less than 30s
 //If you know timeOn and timeOff, session can be calculated as a multiple of the sum of those.
 
-
-
-function perVision(){
-  requestAnimationFrame(perVision);
     //ctx5.clearRect(0,0,innerWidth,innerHeight);
-    if(true){//are we in last 10secs of session,session-10s
+    /*if(true){//are we in last 10secs of session,session-10s
       timer(true);
     } else {
       if(true){//condition time is on for
@@ -498,12 +522,12 @@ function perVision(){
       }
     }
   counterp++;
-}
+}*/
 
 function flashOn(){
   ctx5.beginPath();
     ctx5.fillStyle = 'lightblue';
-    ctx5.arc(counterp, 100, 10, 0, 2 * Math.PI);
+    ctx5.arc(100, 100, 10, 0, 2 * Math.PI);
     ctx5.fill()
     if(false){// time is on for
       flashOff()//Go to off function
@@ -514,7 +538,7 @@ function flashOn(){
 
 function flashOff(){
   ctx5.beginPath();
-    ctx5.filltyle = 'white';//to be same as background colour
+    ctx5.fillstyle = 'white';//to be same as background colour
     ctx5.arc(counterp, 100, 10, 0, 2 * Math.PI);
     ctx5.fill()
     if(true){//if finished being off
