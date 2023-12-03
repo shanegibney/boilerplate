@@ -7,23 +7,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h3>Periphal Vision Checker</h3>
+  <h3><input type="button" value="Reload page" onclick="window.location.reload();"></h3>
+  <hr>
+  <h3>P V C</h3>
   <canvas id='canvas5' width="500" height="250" style='border:2px double#780dc4;'></canvas>ctx5<br>
-  <div id="now"></div>
       <h3>Random on and off values.</h3>
+      <span>Flash <strong>on</strong> for:</span><br>
   <span id="on">Generates a random time flash is on between <span id="minOn">5</span> and <span id="maxOn">30</span> seconds.</span><br>
     min (5-15):<input type="range" id="minimOn" value="10" name="minimumOn" min="5" max="15" step="1" oninput="this.nextElementSibling.value = this.value">
     <output>10</output><br>
     max (16-30):<input type="range" id="maximOn" value="20" name="maximumOn" min="16" max="30" step="1" oninput="this.nextElementSibling.value = this.value">
     <output>20</output><br>
   <p id="rangeOn">Time for flash to be on. To be calculated.</p>
+  <span>Flash <strong>off</strong> for:</span><br>
   <span id="off">Generates a random time flash is off between <span id="minOff">5</span> and <span id="maxOff">30</span> seconds.</span><br>
   min (5-15):<input type="range" id="minimOff" value="10" name="minimumOff" min="5" max="15" step="1" oninput="this.nextElementSibling.value = this.value">
     <output>10</output><br>     
     max (16-30):<input type="range" id="maximOff" value="20" name="maximumOff" min="16" max="30" step="1" oninput="this.nextElementSibling.value = this.value">
     <output>20</output><br>
   <p id="rangeOff">Time for flash to be off. To be calculated.</p> 
-  <span id="testtest"></span><br>
   <span id="test1"></span><br><!--now-->
   <span id="test2"></span><br><!--session-->
   <span id="test3"></span><br><!--intOff-->
@@ -35,7 +37,6 @@
   <canvas id='canvas4' width="700" height="450" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
   <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/>
   Background:<input type="color" id="bgmotion" value="bgmotion" name="bgmotion">
-  <!--<br>If this uncommented line 291 also needs to be uncommented. Background:<input type="color" id="bgmotion" value="bg2. Wavemotion" name="bgmotion">--><br>
   <div>Radians and degrees. Starting at the top. Restarts every cycle.</div>
    <div id="top">Radians</div><br>
   <div id="bottom">Degrees</div>
@@ -61,11 +62,8 @@
     <input id="ani" type="button" value="Animate bouncing ball"
     onclick="toggleanimation();"/>
     <br>Background:<input type="color" id="bgball" value=#E5E5E5 name="bgball">
-<!--<input id="bgballid" type="button" value="submit" onclick="animation"/>-->
   <hr>
-    <h3><input type="button" value="Reload page" onclick="window.location.reload();"></h3>
-
-    <h3>Random numbers 1 - 10</h3>
+  <h3>Random numbers 1 - 10</h3>
     <input id="random" type="button" value="Submit" onclick="rand();"/>
     <p id="rand">value</p>
     <hr>   
@@ -78,7 +76,6 @@
   <span id="show">Generates a random number between <span id="min">this</span> and <span id="max">that</span>.</span>
   <p id="range">value</p>
 <hr>
-  <!--To comment HTML--> 
   <p id="test1">value</p>
   <h3>Incr</h3>
   <input id="incr" type="button" value="Incr++" onclick="incr();"/>
@@ -138,11 +135,6 @@
   <h3>To stop server local server</h3>
   <p>ctrl+c</p>
 <hr>
-  <!--<form>
-  <button type="button" id="anonymousfunction">Submit</button>
-  </form>-->
-
-
  <script>
 // To comment Javascript
 
@@ -187,7 +179,6 @@ function pulse(){
   if(!pulsePause)
   requestAnimationFrame(pulse);
   let bgpulse = document.getElementById("bgpulse").value;
-  //console.log('in animation: bgpulse = ' + bgpulse);
   p=p+0.02;
 if(p>1){
   p=0
@@ -199,7 +190,6 @@ ctx3.clearRect(0,0,innerWidth,innerHeight);
 ctx3.beginPath();
 ctx3.fillStyle = bgpulse;
 ctx3.rect(0, 0, innerWidth, innerHeight);
-//ctx2.arc(n+100, o+100, radius, 0, 2 * Math.PI);
 ctx3.fill();
 ctx3.closePath();
 ctx3.beginPath();
@@ -261,21 +251,8 @@ requestAnimationFrame(show);
 //From a=(v2-v1)/t we have v2=at+v1. The t in this should be t3
 //v1=/(x2-x1)/t The here should be t1 not the same as the above t3.
 //---------------------------------
-/*
-as of line 629 just to compare
-//Draw yellow rectangle
-ctx.beginPath();
-ctx.fillStyle = "yellow";
-ctx.fillRect(shape[7],shape[8],shape[9],shape[10]);
-ctx.fill();
-ctx.closePath();
-*/
 //Draw background----------------
 ctx4.beginPath();
-//ctx4.clearRect(0,0,innerWidth,innerHeight);
-//console.log(bgmotion);//this logs to the console
-//ctx4.fillStyle = bgmotion;
-//ctx4.fillStyle = "#FD0";//this isn't working using an actual colour
 ctx4.fillStyle = "yellow";
 
 ctx4.fillRect(100,100,100,100);
@@ -307,14 +284,6 @@ arrA.pop();//one element needs to be popped off the end as an element is pushed 
 //<array>.pop() - remove from the end of an array
 }
 ctx4.stroke();
-//now that the array arrA[] is full next draw the wave line 354
-//Paper under wave-------------------
-/*
-ctx4.beginPath();
-ctx4.fillStyle = "green";
-ctx4.fillRect(112.5, 200, 400, amp + 20);
-ctx4.fill();
-*/
 //Draw wave or the array------------------------
 ctx4.beginPath();
 ctx4.moveTo(112.5,y2);
@@ -457,8 +426,7 @@ function toggleanimation() {
 }
 const now = Date.now(); 
 
-function flash(){//called line 16
-  document.getElementById("now").innerHTML = (now + 'ms = now: time in milliseconds since 00:00 1st January 1970 the beginning of UNIX time. <br>');
+function flash(){
      minOn = document.querySelector("#minimOn").value; 
      maxOn = document.querySelector("#maximOn").value;
      minOn = parseInt(minOn);
@@ -483,7 +451,6 @@ function flash(){//called line 16
 
  function perVision(intOn,intOff,session){
       //requestAnimationFrame(perVision);
-       document.getElementById("testtest").innerHTML = 'hello world!';
        document.getElementById("test1").innerHTML = 'now = ' + now;
        document.getElementById("test2").innerHTML = 'session = ' + session;
       document.getElementById("test3").innerHTML = 'intOn = ' + intOn; 
