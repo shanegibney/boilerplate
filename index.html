@@ -34,6 +34,7 @@
   <hr>
   <canvas id='canvas4' width="700" height="450" style='border:2px dashed#f1a335;'></canvas>ctx4<br>
   <input id="sin" type="button" value="Circular to linear motion" onclick="toggleshow();"/>
+  Background:<input type="color" id="bgmotion" value="bgmotion" name="bgmotion">
   <!--<br>If this uncommented line 291 also needs to be uncommented. Background:<input type="color" id="bgmotion" value="bg2. Wavemotion" name="bgmotion">--><br>
   <div>Radians and degrees. Starting at the top. Restarts every cycle.</div>
    <div id="top">Radians</div><br>
@@ -42,6 +43,7 @@
   <canvas id='canvas3' width="500" height="250" style='border:2px double#00FFFF;'></canvas>ctx3<br>
   <input id="pulsing" type="button" value="Animate pulsing" onclick="togglePause();"/>
   <br>Background:<input type="color" id="bgpulse" value="bgpulse" name="bgpulse">
+  
   <hr>
     <canvas id='canvas1' width="500" height="250" style='border:2px dotted #FF0000;'></canvas>ctx<br>
     <input id="canvasCircle" type="button" value="circle" onclick="circle();"/>
@@ -58,7 +60,7 @@
     <canvas id="canvas2" width="800" height="300" style='border:2px dashed #0000FF;'></canvas>ctx2
     <input id="ani" type="button" value="Animate bouncing ball"
     onclick="toggleanimation();"/>
-    <br>Background:<input type="color" id="bgball" value="bgball" name="bgball">
+    <br>Background:<input type="color" id="bgball" value=#E5E5E5 name="bgball">
 <!--<input id="bgballid" type="button" value="submit" onclick="animation"/>-->
   <hr>
     <h3><input type="button" value="Reload page" onclick="window.location.reload();"></h3>
@@ -275,7 +277,8 @@ ctx4.beginPath();
 //ctx4.fillStyle = bgmotion;
 //ctx4.fillStyle = "#FD0";//this isn't working using an actual colour
 ctx4.fillStyle = "yellow";
-ctx.fillRect(shape[7],shape[8],shape[9],shape[10]);
+
+ctx4.fillRect(100,100,100,100);
 //ctx4.fillRect(0, 0, innerWidth, innerHeight);//draw a background rectangle
 ctx4.fill();//fill() closes the path anyway, there shouldn't be any need for closePath();
 ctx4.closePath();
@@ -316,7 +319,12 @@ ctx4.fill();
 ctx4.beginPath();
 ctx4.moveTo(112.5,y2);
  for(let kkk=0; kkk<arrA.length; kkk++){//forward loop
-ctx4.clearRect(0,0,innerWidth,innerHeight);
+let bgmotion = document.getElementById("bgmotion").value;
+//console.log("hi");
+ctx4.fillStyle = bgmotion;//background colour
+//ctx4.clearRect(0,0,innerWidth,innerHeight);
+ctx4.fillRect(0,0,innerWidth,innerHeight);
+ctx4.fillStyle = "black";
 ctx4.lineTo(112.5+(kkk*nn)+20,arrA[kkk]);//nn how spread out the wave is
   }
 ctx4.stroke();
@@ -471,7 +479,6 @@ function flash(){//called line 16
     document.getElementById("maxOff").innerHTML = maxOff;
       var session = 300;//will come from a form input
   perVision(intOn,intOff,session);
-  
 }
 
  function perVision(intOn,intOff,session){
@@ -526,7 +533,7 @@ let timeOff = 0;//must be less than session, greater than 5s and less than 30s
 
 function flashOn(){
   ctx5.beginPath();
-    ctx5.fillStyle = 'lightblue';
+    ctx5.fillStyle = 'red';
     ctx5.arc(100, 100, 10, 0, 2 * Math.PI);
     ctx5.fill()
     if(false){// time is on for
